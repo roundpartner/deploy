@@ -5,14 +5,9 @@ namespace Deploy;
 class Deploy {
 
     /**
-     * @var string[]
+     * @var Request
      */
-    protected $headers;
-
-    /**
-     * @var string
-     */
-    protected $body;
+    protected $request;
 
     /**
      * @var string
@@ -35,8 +30,7 @@ class Deploy {
     {
         $this->shell = isset($_SERVER['SHELL']);
 
-        $this->headers = $headers;
-        $this->body = $body;
+        $this->request = new Request($headers, $body);
         $this->secret = $secret;
     }
 
@@ -50,14 +44,16 @@ class Deploy {
 
     public function verifyRequest()
     {
-        $signature = $this->headers['X-Hub-Signature'];
+        $headers = $this->request->getHeaders();
+        $body = $this->request->getBody();
+        $signature = $headers['X-Hub-Signature'];
         list($algorithm, $requestHash) = explode('=', $signature) + ["",""];
 
         if (!in_array($algorithm, hash_algos(), true)) {
             return false;
         }
 
-        $bodyHash = hash_hmac($algorithm, $this->body, $this->secret);
+        $bodyHash = hash_hmac($algorithm, $body, $this->secret);
 
         if (hash_equals($bodyHash, $requestHash)) {
             return true;
