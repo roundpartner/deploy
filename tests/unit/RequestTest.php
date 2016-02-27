@@ -26,7 +26,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
     public function testGetBody($headers, $body)
     {
         $request = new \Deploy\Request($headers, $body);
-        $this->assertInternalType('string', $request->getBody());
+        $this->assertInternalType('string', $request->getRawBody());
     }
 
     /**

@@ -36,9 +36,21 @@ class Request
     }
 
     /**
+     * @param $header
+     * @return false|string
+     */
+    public function getHeader($header)
+    {
+        if (!isset($this->headers[$header])) {
+            return false;
+        }
+        return $this->headers[$header];
+    }
+
+    /**
      * @return string
      */
-    public function getBody()
+    public function getRawBody()
     {
         return $this->body;
     }

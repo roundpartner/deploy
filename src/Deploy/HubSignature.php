@@ -10,6 +10,11 @@ class HubSignature
      */
     protected $secret;
 
+    /**
+     * HubSignature constructor.
+     *
+     * @param string $secret
+     */
     public function __construct($secret)
     {
         $this->secret = $secret;
@@ -21,15 +26,14 @@ class HubSignature
      */
     public function verify(Request $request)
     {
-        $headers = $request->getHeaders();
-        $signature = $headers['X-Hub-Signature'];
+        $signature = $request->getHeader('X-Hub-Signature');
         list($algorithm, $requestHash) = explode('=', $signature) + ["",""];
 
         if (!in_array($algorithm, hash_algos(), true)) {
             return false;
         }
 
-        $bodyHash = hash_hmac($algorithm, $request->getBody(), $this->secret);
+        $bodyHash = hash_hmac($algorithm, $request->getRawBody(), $this->secret);
 
         if (hash_equals($bodyHash, $requestHash)) {
             return true;
