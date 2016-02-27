@@ -3,6 +3,9 @@
 class DeployTest extends PHPUnit_Framework_TestCase
 {
 
+    /**
+     * @var \Deploy\Deploy
+     */
     protected $deploy;
 
     public function setUp()
