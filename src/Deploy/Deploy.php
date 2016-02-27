@@ -20,6 +20,11 @@ class Deploy {
     protected $secret;
 
     /**
+     * @var bool
+     */
+    protected $shell;
+
+    /**
      * Deploy constructor.
      *
      * @param string[] $headers
@@ -28,9 +33,19 @@ class Deploy {
      */
     public function __construct($headers, $body, $secret)
     {
+        $this->shell = isset($_SERVER['SHELL']);
+
         $this->headers = $headers;
         $this->body = $body;
         $this->secret = $secret;
+    }
+
+    public function dispatch()
+    {
+        if (!$this->shell) {
+            echo 'Request Complete, nothing processed';
+        }
+        return true;
     }
 
     public function verifyRequest()
