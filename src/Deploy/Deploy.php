@@ -48,26 +48,3 @@ class Deploy {
 
 }
 
-
-if (!function_exists('hash_equals')) {
-    /**
-     * Handles comparisons and prevents time attacks for php versions lesser than 5.6
-     *
-     * @param $str1
-     * @param $str2
-     * @return bool
-     */
-    function hash_equals($str1, $str2)
-    {
-        if (strlen($str1) != strlen($str2)) {
-            return false;
-        } else {
-            $res = $str1 ^ $str2;
-            $ret = 0;
-            for ($i = strlen($res) - 1; $i >= 0; $i--) {
-                $ret |= ord($res[$i]);
-            }
-            return !$ret;
-        }
-    }
-}
