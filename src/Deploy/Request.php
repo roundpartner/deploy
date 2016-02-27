@@ -21,6 +21,12 @@ class Request
         $this->body = $body;
     }
 
+    public function verify($secret)
+    {
+        $hubSignature = new HubSignature($secret);
+        return $hubSignature->verify($this);
+    }
+
     /**
      * @return string[]
      */

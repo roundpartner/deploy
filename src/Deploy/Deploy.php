@@ -36,31 +36,16 @@ class Deploy {
 
     public function dispatch()
     {
+        if (!$this->request->verify($this->secret)) {
+            return false;
+        }
+
         if (!$this->shell) {
             echo 'Request Complete, nothing processed';
         }
         return true;
     }
 
-    public function verifyRequest()
-    {
-        $headers = $this->request->getHeaders();
-        $body = $this->request->getBody();
-        $signature = $headers['X-Hub-Signature'];
-        list($algorithm, $requestHash) = explode('=', $signature) + ["",""];
-
-        if (!in_array($algorithm, hash_algos(), true)) {
-            return false;
-        }
-
-        $bodyHash = hash_hmac($algorithm, $body, $this->secret);
-
-        if (hash_equals($bodyHash, $requestHash)) {
-            return true;
-        }
-
-        return false;
-    }
 }
 
 

@@ -12,13 +12,4 @@ class DeployTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($deploy->dispatch());
     }
 
-    /**
-     * @dataProvider \Providers\RequestProvider::requestProvider()
-     */
-    public function testVerifyRequest($headers, $body, $secret)
-    {
-        $deploy = new \Deploy\Deploy($headers, $body, $secret);
-        $this->assertTrue($deploy->verifyRequest());
-    }
-
 }
