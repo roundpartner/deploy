@@ -10,7 +10,8 @@
   ],
   "autoload": {
     "psr-0": {
-      "Deploy": "src/"
+      "Deploy": "src/",
+      "Providers": "tests/"
     }
   },
   "require-dev": {

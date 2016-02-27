@@ -15,15 +15,22 @@ class Deploy {
     protected $body;
 
     /**
+     * @var string
+     */
+    protected $secret;
+
+    /**
      * Deploy constructor.
      *
      * @param string[] $headers
      * @param string $body
+     * @param string $secret
      */
-    public function __construct($headers, $body)
+    public function __construct($headers, $body, $secret)
     {
         $this->headers = $headers;
         $this->body = $body;
+        $this->secret = $secret;
     }
 
     public function verifyRequest()
@@ -35,7 +42,7 @@ class Deploy {
             return false;
         }
 
-        $bodyHash = hash_hmac($algorithm, $this->body, 'myverysecuretestkey');
+        $bodyHash = hash_hmac($algorithm, $this->body, $this->secret);
 
         if (hash_equals($bodyHash, $requestHash)) {
             return true;
