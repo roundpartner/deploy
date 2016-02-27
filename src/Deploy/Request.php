@@ -15,10 +15,16 @@ class Request
      */
     protected $body;
 
+    /**
+     * @var \Deploy\Entity\Request
+     */
+    protected $entity;
+
     public function __construct($headers, $body)
     {
         $this->headers = $headers;
         $this->body = $body;
+        $this->entity = RequestFactory::createRequest($body);
     }
 
     public function verify($secret)
@@ -45,6 +51,11 @@ class Request
             return false;
         }
         return $this->headers[$header];
+    }
+
+    public function getBody()
+    {
+        return $this->entity;
     }
 
     /**

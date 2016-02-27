@@ -6,7 +6,6 @@ class RequestTest extends PHPUnit_Framework_TestCase
     /**
      * @param array[] $headers
      * @param string $body
-     * @param string $secret
      *
      * @dataProvider \Providers\RequestProvider::requestProvider()
      */
@@ -19,14 +18,25 @@ class RequestTest extends PHPUnit_Framework_TestCase
     /**
      * @param array[] $headers
      * @param string $body
-     * @param string $secret
+     *
+     * @dataProvider \Providers\RequestProvider::requestProvider()
+     */
+    public function testGetRawBody($headers, $body)
+    {
+        $request = new \Deploy\Request($headers, $body);
+        $this->assertInternalType('string', $request->getRawBody());
+    }
+
+    /**
+     * @param array[] $headers
+     * @param string $body
      *
      * @dataProvider \Providers\RequestProvider::requestProvider()
      */
     public function testGetBody($headers, $body)
     {
         $request = new \Deploy\Request($headers, $body);
-        $this->assertInternalType('string', $request->getRawBody());
+        $this->assertInstanceOf('Deploy\Entity\Request', $request->getBody());
     }
 
     /**
