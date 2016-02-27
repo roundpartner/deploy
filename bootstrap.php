@@ -2,7 +2,10 @@
 
 require_once 'vendor/autoload.php';
 
-new \Deploy\Deploy();
+$headers = getallheaders();
+$body = file_get_contents('php://input');
 
-$entityBody = file_get_contents('php://input');
-$entityBody = json_decode($entityBody);
+file_put_contents('/tmp/body', $body);
+file_put_contents('/tmp/headers', print_r($headers, true));
+
+echo 'Request Complete, nothing processed';
