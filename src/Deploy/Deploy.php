@@ -48,7 +48,6 @@ class Deploy {
 
         $plan = PlanFactory::createPlan($this->request->getBody());
 
-
         return true;
     }
 
