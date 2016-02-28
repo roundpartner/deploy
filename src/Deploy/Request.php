@@ -24,7 +24,7 @@ class Request
     {
         $this->headers = $headers;
         $this->body = $body;
-        $this->entity = RequestFactory::createRequest($body);
+        $this->entity = RequestFactory::parse($body);
     }
 
     public function verify($secret)
