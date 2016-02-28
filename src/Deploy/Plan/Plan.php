@@ -2,6 +2,7 @@
 
 namespace Deploy\Plan;
 
+use Deploy\Config;
 use Deploy\Entity\Request;
 
 class Plan
@@ -16,6 +17,10 @@ class Plan
     {
         $entity = new Entity\Plan();
         $entity->full_name = $request->repository->full_name;
+
+        $config = Config::get($entity->full_name);
+        $entity->command = $config->cmd;
+
         $this->entity = $entity;
     }
 
