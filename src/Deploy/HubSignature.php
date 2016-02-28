@@ -5,6 +5,9 @@ namespace Deploy;
 class HubSignature
 {
 
+    const HEADER_HUB_SIGNATURE = 'X-Hub-Signature';
+    const DEFAULT_ALGORITHM = 'sha1';
+
     /**
      * @var string
      */
@@ -26,44 +29,59 @@ class HubSignature
      */
     public function verify(Request $request)
     {
-        $signature = $request->getHeader('X-Hub-Signature');
+        $signature = $request->getHeader(self::HEADER_HUB_SIGNATURE);
         list($algorithm, $requestHash) = explode('=', $signature) + ["",""];
 
-        if (!in_array($algorithm, hash_algos(), true)) {
-            return false;
-        }
+        $bodyHash = $this->getHash($request->getRawBody(), $algorithm);
 
-        $bodyHash = hash_hmac($algorithm, $request->getRawBody(), $this->secret);
-
-        if (hash_equals($bodyHash, $requestHash)) {
+        if ($bodyHash !== false && $this->hashEquals($bodyHash, $requestHash)) {
             return true;
         }
 
         return false;
     }
 
-}
-
-
-if (!function_exists('hash_equals')) {
     /**
-     * Handles comparisons and prevents time attacks for php versions lesser than 5.6
+     * @param string $content
+     * @param string $algorithm
+     * @return bool|string
+     */
+    public function getHash($content, $algorithm = self::DEFAULT_ALGORITHM)
+    {
+        if (!is_string($content)) {
+            return false;
+        }
+
+        if (!in_array($algorithm, hash_algos(), true)) {
+            return false;
+        }
+
+        return hash_hmac($algorithm, $content, $this->secret);
+    }
+
+    /**
+     * String comparison for hashes
      *
-     * @param $str1
-     * @param $str2
+     * @param $knownString
+     * @param $userString
      * @return bool
      */
-    function hash_equals($str1, $str2)
+    private function hashEquals($knownString, $userString)
     {
-        if (strlen($str1) != strlen($str2)) {
-            return false;
-        } else {
-            $res = $str1 ^ $str2;
-            $ret = 0;
-            for ($i = strlen($res) - 1; $i >= 0; $i--) {
-                $ret |= ord($res[$i]);
-            }
-            return !$ret;
+        if (function_exists('hash_equals')) {
+            return hash_equals($knownString, $userString);
         }
+
+        if (strlen($knownString) !== strlen($userString)) {
+            return false;
+        }
+
+        $res = $knownString ^ $userString;
+        $ret = 0;
+        for ($i = strlen($res) - 1; $i >= 0; $i--) {
+            $ret |= ord($res[$i]);
+        }
+        return !$ret;
     }
+
 }
