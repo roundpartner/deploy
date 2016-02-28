@@ -8,13 +8,15 @@ class Plan
 {
 
     /**
-     * @var Request
+     * @var Entity\Plan
      */
-    protected $request;
+    protected $entity;
 
     public function __construct(Request $request)
     {
-        $this->request = $request;
+        $entity = new Entity\Plan();
+        $entity->full_name = $request->repository->full_name;
+        $this->entity = $entity;
     }
 
 }

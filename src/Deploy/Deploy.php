@@ -2,6 +2,8 @@
 
 namespace Deploy;
 
+use Deploy\Plan\PlanFactory;
+
 class Deploy {
 
     /**
@@ -43,6 +45,10 @@ class Deploy {
         if (!$this->shell) {
             echo 'Request Complete, nothing processed';
         }
+
+        $plan = PlanFactory::createPlan($this->request->getBody());
+
+
         return true;
     }
 
