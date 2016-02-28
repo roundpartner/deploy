@@ -2,6 +2,8 @@
 
 namespace Deploy;
 
+use VerifyHash\VerifyHash;
+
 class HubSignature
 {
 
@@ -32,10 +34,12 @@ class HubSignature
         $signature = $request->getHeader(self::HEADER_HUB_SIGNATURE);
         list($algorithm, $requestHash) = explode('=', $signature) + ["",""];
 
+        // @todo: fixme
         $bodyHash = $this->getHash($request->getRawBody(), $algorithm);
 
-        if ($bodyHash !== false && $this->hashEquals($bodyHash, $requestHash)) {
-            return true;
+        if ($bodyHash !== false) {
+            $verifyHash = new VerifyHash($this->secret);
+            return $verifyHash->verify($requestHash, $request->getRawBody(), $algorithm);
         }
 
         return false;
@@ -48,15 +52,8 @@ class HubSignature
      */
     public function getHash($content, $algorithm = self::DEFAULT_ALGORITHM)
     {
-        if (!is_string($content)) {
-            return false;
-        }
-
-        if (!in_array($algorithm, hash_algos(), true)) {
-            return false;
-        }
-
-        return hash_hmac($algorithm, $content, $this->secret);
+        $verifyHash = new VerifyHash($this->secret);
+        return $verifyHash->hash($content, $algorithm);
     }
 
     /**

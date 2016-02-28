@@ -43,7 +43,7 @@ class Deploy {
         }
 
         $plan = PlanFactory::createPlan($this->request->getBody());
-        if (!$plan->dispatch()) {
+        if (!$this->shell && !$plan->dispatch()) {
             echo 'Running plan failed';
         }
 
