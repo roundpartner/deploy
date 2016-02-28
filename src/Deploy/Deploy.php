@@ -42,12 +42,14 @@ class Deploy {
             return false;
         }
 
+        $plan = PlanFactory::createPlan($this->request->getBody());
+        if (!$plan->dispatch()) {
+            echo 'Running plan failed';
+        }
+
         if (!$this->shell) {
             echo 'Request Complete, nothing processed';
         }
-
-        $plan = PlanFactory::createPlan($this->request->getBody());
-        $plan->dispatch();
 
         return true;
     }

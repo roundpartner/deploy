@@ -35,6 +35,8 @@ class Plan
 
     public function dispatch()
     {
+        return false;
+
         // @todo clean up all this code
         if (!file_exists($this->entity->location)) {
             if (!mkdir($this->entity->location, 0755, true)) {
