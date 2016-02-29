@@ -34,51 +34,8 @@ class HubSignature
         $signature = $request->getHeader(self::HEADER_HUB_SIGNATURE);
         list($algorithm, $requestHash) = explode('=', $signature) + ["",""];
 
-        // @todo: fixme
-        $bodyHash = $this->getHash($request->getRawBody(), $algorithm);
-
-        if ($bodyHash !== false) {
-            $verifyHash = new VerifyHash($this->secret);
-            return $verifyHash->verify($requestHash, $request->getRawBody(), $algorithm);
-        }
-
-        return false;
-    }
-
-    /**
-     * @param string $content
-     * @param string $algorithm
-     * @return bool|string
-     */
-    public function getHash($content, $algorithm = self::DEFAULT_ALGORITHM)
-    {
         $verifyHash = new VerifyHash($this->secret);
-        return $verifyHash->hash($content, $algorithm);
-    }
-
-    /**
-     * String comparison for hashes
-     *
-     * @param $knownString
-     * @param $userString
-     * @return bool
-     */
-    private function hashEquals($knownString, $userString)
-    {
-        if (function_exists('hash_equals')) {
-            return hash_equals($knownString, $userString);
-        }
-
-        if (strlen($knownString) !== strlen($userString)) {
-            return false;
-        }
-
-        $res = $knownString ^ $userString;
-        $ret = 0;
-        for ($i = strlen($res) - 1; $i >= 0; $i--) {
-            $ret |= ord($res[$i]);
-        }
-        return !$ret;
+        return $verifyHash->verify($requestHash, $request->getRawBody(), $algorithm);
     }
 
 }

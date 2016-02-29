@@ -14,13 +14,4 @@ class HubSignatureTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($hubSignature->verify($request));
     }
 
-    /**
-     * @dataProvider \Providers\SignatureProvider::signatureProvider()
-     */
-    public function testGetHash($string, $expected)
-    {
-        $hubSignature = new \Deploy\HubSignature('reallysecurestring');
-        $this->assertEquals($hubSignature->getHash($string), $expected);
-    }
-
 }
