@@ -2,7 +2,7 @@
 
 namespace Deploy;
 
-use VerifyHash\VerifyHash;
+use \RoundPartner\VerifyHash\VerifyHash;
 
 class HubSignature
 {
