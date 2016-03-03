@@ -15,7 +15,7 @@
     },
     {
       "type": "git",
-      "url": "https://github.com/roundpartner/verifyhash"
+      "url": "https://github.com/roundpartner/verify-hash"
     }
   ],
   "autoload": {
@@ -30,7 +30,7 @@
   },
   "require": {
     "roundpartner/cloud": "dev-master",
-    "roundpartner/verifyhash": "dev-master"
+    "roundpartner/verify-hash": "dev-master"
   },
   "require-dev": {
     "phpunit/phpunit": "^4.8"
