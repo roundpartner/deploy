@@ -25,6 +25,9 @@
   "autoload": {
     "psr-0": {
       "Deploy": "src/"
+    },
+    "psr-4": {
+      "RoundPartner\\": "src/"
     }
   },
   "autoload-dev": {
@@ -35,7 +38,10 @@
   "require": {
     "roundpartner/cloud": "dev-master",
     "roundpartner/verify-hash": "dev-master",
-    "rp/conf": "*"
+    "rp/conf": "*",
+    "symfony/dependency-injection": "^3.0",
+    "symfony/yaml": "^3.0",
+    "symfony/config": "^3.0"
   },
   "require-dev": {
     "phpunit/phpunit": "^4.8"

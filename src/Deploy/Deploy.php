@@ -2,7 +2,6 @@
 
 namespace Deploy;
 
-use Cloud\Cloud;
 use Deploy\Plan\PlanFactory;
 
 class Deploy {
