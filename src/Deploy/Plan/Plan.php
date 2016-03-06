@@ -2,7 +2,6 @@
 
 namespace Deploy\Plan;
 
-use Deploy\Config;
 use Deploy\Entity\Request;
 use RoundPartner\Deploy\Container;
 
