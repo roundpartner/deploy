@@ -4,6 +4,7 @@ namespace Deploy\Plan;
 
 use Deploy\Config;
 use Deploy\Entity\Request;
+use RoundPartner\Deploy\Container;
 
 class Plan
 {
@@ -13,12 +14,12 @@ class Plan
      */
     protected $entity;
 
-    public function __construct(Request $request)
+    public function __construct(Request $request, Container $container)
     {
         $entity = new Entity\Plan();
         $entity->full_name = $request->repository->full_name;
 
-        $config = Config::get($entity->full_name);
+        $config = $container->getConfig()->getValue($entity->full_name);
         if ($config === null) {
             return;
         }
