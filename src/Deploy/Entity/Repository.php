@@ -1,6 +1,6 @@
 <?php
 
-namespace Deploy\Entity;
+namespace RoundPartner\Deploy\Entity;
 
 class Repository
 {

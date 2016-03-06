@@ -1,6 +1,6 @@
 <?php
 
-namespace Deploy;
+namespace RoundPartner\Deploy;
 
 use \RoundPartner\VerifyHash\VerifyHash;
 

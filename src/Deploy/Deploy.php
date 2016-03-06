@@ -1,9 +1,8 @@
 <?php
 
-namespace Deploy;
+namespace RoundPartner\Deploy;
 
-use Deploy\Plan\PlanFactory;
-use RoundPartner\Deploy\Container;
+use RoundPartner\Deploy\Plan\PlanFactory;
 
 class Deploy {
 

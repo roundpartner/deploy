@@ -11,7 +11,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
      */
     public function testGetHeaders($headers, $body)
     {
-        $request = new \Deploy\Request($headers, $body);
+        $request = new \RoundPartner\Deploy\Request($headers, $body);
         $this->assertInternalType('array', $request->getHeaders());
     }
 
@@ -23,7 +23,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
      */
     public function testGetRawBody($headers, $body)
     {
-        $request = new \Deploy\Request($headers, $body);
+        $request = new \RoundPartner\Deploy\Request($headers, $body);
         $this->assertInternalType('string', $request->getRawBody());
     }
 
@@ -35,8 +35,8 @@ class RequestTest extends PHPUnit_Framework_TestCase
      */
     public function testGetBody($headers, $body)
     {
-        $request = new \Deploy\Request($headers, $body);
-        $this->assertInstanceOf('Deploy\Entity\Request', $request->getBody());
+        $request = new \RoundPartner\Deploy\Request($headers, $body);
+        $this->assertInstanceOf('RoundPartner\Deploy\Entity\Request', $request->getBody());
     }
 
     /**
@@ -47,7 +47,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
      */
     public function testGetBodyHasCommits($headers, $body)
     {
-        $request = new \Deploy\Request($headers, $body);
+        $request = new \RoundPartner\Deploy\Request($headers, $body);
         $body = $request->getBody();
         $this->assertNotEmpty($body->commits);
     }
@@ -61,7 +61,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
      */
     public function testVerify($headers, $body, $secret)
     {
-        $request = new \Deploy\Request($headers, $body);
+        $request = new \RoundPartner\Deploy\Request($headers, $body);
         $this->assertTrue($request->verify($secret));
     }
 }

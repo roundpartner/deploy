@@ -1,6 +1,6 @@
 <?php
 
-namespace Deploy\Plan\Entity;
+namespace RoundPartner\Deploy\Plan\Entity;
 
 class Plan
 {

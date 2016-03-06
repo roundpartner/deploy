@@ -1,8 +1,8 @@
 <?php
 
-namespace Deploy\Plan;
+namespace RoundPartner\Deploy\Plan;
 
-use Deploy\Entity\Request;
+use RoundPartner\Deploy\Entity\Request;
 use RoundPartner\Deploy\Container;
 
 class PlanFactory

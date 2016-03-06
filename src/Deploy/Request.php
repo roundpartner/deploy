@@ -1,6 +1,6 @@
 <?php
 
-namespace Deploy;
+namespace RoundPartner\Deploy;
 
 class Request
 {
@@ -16,7 +16,7 @@ class Request
     protected $body;
 
     /**
-     * @var \Deploy\Entity\Request
+     * @var \RoundPartner\Deploy\Entity\Request
      */
     protected $entity;
 

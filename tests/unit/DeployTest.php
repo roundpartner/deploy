@@ -12,7 +12,7 @@ class DeployTest extends PHPUnit_Framework_TestCase
      */
     public function testDispatch($headers, $body, $secret)
     {
-        $deploy = new \Deploy\Deploy($headers, $body, $secret, new \RoundPartner\Deploy\Container());
+        $deploy = new \RoundPartner\Deploy\Deploy($headers, $body, $secret, new \RoundPartner\Deploy\Container());
         $this->assertTrue($deploy->dispatch());
     }
 
