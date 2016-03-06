@@ -29,16 +29,15 @@ class Deploy {
     /**
      * Deploy constructor.
      *
-     * @param string[] $headers
-     * @param string $body
+     * @param Request $request
      * @param string $secret
      * @param $container
      */
-    public function __construct($headers, $body, $secret, Container $container)
+    public function __construct(Request $request, $secret, Container $container)
     {
         $this->shell = isset($_SERVER['SHELL']);
 
-        $this->request = new Request($headers, $body);
+        $this->request = $request;
         $this->secret = $secret;
 
         $this->container = $container;

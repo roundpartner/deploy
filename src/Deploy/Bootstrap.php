@@ -19,8 +19,9 @@ class Bootstrap
      */
     public function __construct($headers, $body, $secret)
     {
+        $request = new Request($headers, $body);
         $container = new Container();
-        $this->deploy = new Deploy($headers, $body, $secret, $container);
+        $this->deploy = new Deploy($request, $secret, $container);
     }
 
     /**
