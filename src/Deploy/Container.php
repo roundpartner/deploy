@@ -2,6 +2,7 @@
 
 namespace RoundPartner\Deploy;
 
+use Cloud\Cloud;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
@@ -28,6 +29,10 @@ class Container
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../../config/'));
         $loader->load('services.yml');
         $this->container = $container;
+
+        $auth = require __DIR__ . '/../../vendor/rp/conf/auth.php';
+        $cloud = new Cloud($auth['opencloud']['username'], $auth['opencloud']['key'], $auth['opencloud']['secret']);
+        $this->container->set('opencloud', $cloud);
     }
 
     /**
@@ -37,4 +42,13 @@ class Container
     {
         return $this->container->get('config');
     }
+
+    /**
+     * @return Cloud
+     */
+    public function getCloud()
+    {
+        return $this->container->get('opencloud');
+    }
+
 }

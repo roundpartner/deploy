@@ -2,6 +2,7 @@
 
 namespace RoundPartner\Deploy\Plan;
 
+use Cloud\Cloud;
 use RoundPartner\Deploy\Entity\Request;
 use RoundPartner\Deploy\Container;
 
@@ -13,8 +14,14 @@ class Plan
      */
     protected $entity;
 
+    /**
+     * @var Container
+     */
+    protected $container;
+
     public function __construct(Request $request, Container $container)
     {
+        $this->container = $container;
         $entity = new Entity\Plan();
         $entity->full_name = $request->repository->full_name;
 
@@ -35,6 +42,10 @@ class Plan
 
     public function dispatch()
     {
+
+        $cloud = $this->container->getCloud();
+        $cloud->addMessage('deploy_dev', $this->entity);
+
         return false;
 
         // @todo clean up all this code
