@@ -3,6 +3,7 @@
 namespace Deploy;
 
 use Deploy\Plan\PlanFactory;
+use RoundPartner\Deploy\Container;
 
 class Deploy {
 
@@ -22,18 +23,26 @@ class Deploy {
     protected $shell;
 
     /**
+     * @var Container
+     */
+    protected $container;
+
+    /**
      * Deploy constructor.
      *
      * @param string[] $headers
      * @param string $body
      * @param string $secret
+     * @param $container
      */
-    public function __construct($headers, $body, $secret)
+    public function __construct($headers, $body, $secret, Container $container)
     {
         $this->shell = isset($_SERVER['SHELL']);
 
         $this->request = new Request($headers, $body);
         $this->secret = $secret;
+
+        $this->container = $container;
     }
 
     public function dispatch()
