@@ -12,7 +12,6 @@ $headers = getallheaders();
 $body = file_get_contents('php://input');
 $secret = $_SERVER['GIT_SECRET'];
 
-$container = new \RoundPartner\Deploy\Container();
-$deploy = new \RoundPartner\Deploy\Deploy($headers, $body, $secret, $container);
-$deploy->dispatch();
+$bootstrap = new \RoundPartner\Deploy\Bootstrap($headers, $body, $secret);
+$bootstrap->dispatch();
 
