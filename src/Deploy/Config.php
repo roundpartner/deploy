@@ -18,20 +18,7 @@ class Config
         $this->config = parse_ini_file($config, true);
     }
 
-    public static function setFile($config)
-    {
-        self::$instance = new Config($config);
-    }
-
-    public static function get($key)
-    {
-        if (self::$instance === null) {
-            self::$instance = new Config();
-        }
-        return self::$instance->getValue($key);
-    }
-
-    public function getValue($key)
+    public function get($key)
     {
         return $this->config[$key];
     }

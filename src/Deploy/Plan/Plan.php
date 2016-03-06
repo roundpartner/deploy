@@ -19,7 +19,7 @@ class Plan
         $entity = new Entity\Plan();
         $entity->full_name = $request->repository->full_name;
 
-        $config = $container->getConfig()->getValue($entity->full_name);
+        $config = $container->getConfig()->get($entity->full_name);
         if ($config === null) {
             return;
         }
