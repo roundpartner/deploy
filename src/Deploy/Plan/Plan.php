@@ -2,7 +2,6 @@
 
 namespace RoundPartner\Deploy\Plan;
 
-use Cloud\Cloud;
 use RoundPartner\Deploy\Entity\Request;
 use RoundPartner\Deploy\Container;
 
@@ -42,11 +41,14 @@ class Plan
 
     public function dispatch()
     {
-
         $cloud = $this->container->getCloud();
         $cloud->addMessage('deploy_dev', $this->entity);
 
         return false;
+    }
+
+    public function deploy()
+    {
 
         // @todo clean up all this code
         if (!file_exists($this->entity->location)) {
@@ -57,15 +59,19 @@ class Plan
 
         if (!file_exists($this->entity->location . '/' . $this->entity->directory . '/.git')) {
             $command = sprintf('cd %s && git clone %s %s', $this->entity->location, $this->entity->clone_address, $this->entity->directory);
-            exec($command);
+            $this->execute($command);
         } else {
             $command = sprintf('cd %s && git pull', $this->entity->location . '/' . $this->entity->directory);
-            exec($command);
+            $this->execute($command);
         }
 
         $command = sprintf('cd %s && %s', $this->entity->location . '/' . $this->entity->directory, $this->entity->command);
-        exec($command);
+        $this->execute($command);
+    }
 
+    private function execute($command)
+    {
+        echo $command;
     }
 
 }
