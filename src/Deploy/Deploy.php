@@ -49,7 +49,7 @@ class Deploy {
             return false;
         }
 
-        $plan = PlanFactory::createPlan($this->request->getBody(), $this->container);
+        $plan = PlanFactory::createPlan($this->container, $this->request->getBody());
         if (!$this->shell && !$plan->dispatch()) {
             echo 'Running plan failed';
         }

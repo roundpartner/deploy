@@ -17,6 +17,6 @@ class ServerFactoryTest extends PHPUnit_Framework_TestCase
 
     protected function getSingleRunServer()
     {
-        return \RoundPartner\Deploy\Server\ServerFactory::singleRun();
+        return \RoundPartner\Deploy\Server\ServerFactory::singleRun(new \RoundPartner\Deploy\Container());
     }
 }

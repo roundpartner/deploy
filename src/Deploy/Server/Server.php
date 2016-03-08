@@ -2,7 +2,8 @@
 
 namespace RoundPartner\Deploy\Server;
 
-use Cloud\Cloud;
+use RoundPartner\Deploy\Container;
+use RoundPartner\Deploy\Plan\PlanFactory;
 
 class Server
 {
@@ -11,10 +12,13 @@ class Server
 
     protected $iterations;
 
+    protected $container;
+
     private $currentIteration;
 
-    public function __construct($iterations)
+    public function __construct(Container $container, $iterations)
     {
+        $this->container = $container;
         $this->iterations = $iterations;
         $this->currentIteration = 0;
     }
@@ -32,7 +36,22 @@ class Server
             return false;
         }
 
+        $plans = $this->container->getCloud()->getMessages('deploy_dev');
+        $this->runPlans($plans);
+
         ++$this->currentIteration;
         return true;
     }
+
+    /**
+     * @param \RoundPartner\Deploy\Plan\Entity\Plan[] $planEntities
+     */
+    protected function runPlans($planEntities)
+    {
+        foreach ($planEntities as $planEntity) {
+            $plan = PlanFactory::createWithEntity($this->container, $planEntity);
+            $plan->deploy();
+        }
+    }
+
 }

@@ -18,11 +18,11 @@ class Plan
      */
     protected $container;
 
-    public function __construct(Request $request, Container $container)
+    public function __construct(Container $container, $repositoryName)
     {
         $this->container = $container;
         $entity = new Entity\Plan();
-        $entity->full_name = $request->repository->full_name;
+        $entity->full_name = $repositoryName;
 
         $config = $container->getConfig()->get($entity->full_name);
         if ($config === null) {
