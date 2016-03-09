@@ -22,12 +22,14 @@ class Container
 
     /**
      * Container constructor.
+     *
+     * @param string $config
      */
-    public function __construct()
+    public function __construct($config = 'services')
     {
         $container = new ContainerBuilder();
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../../config/'));
-        $loader->load('services.yml');
+        $loader->load($config . '.yml');
         $this->container = $container;
 
         $auth = require __DIR__ . '/../../vendor/rp/conf/auth.php';

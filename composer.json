@@ -28,6 +28,9 @@
     }
   },
   "autoload-dev": {
+    "psr-4": {
+      "RoundPartner\\Test\\": "tests/"
+    },
     "psr-0": {
       "Providers": "tests/"
     }
@@ -38,7 +41,8 @@
     "rp/conf": "*",
     "symfony/dependency-injection": "^3.0",
     "symfony/yaml": "^3.0",
-    "symfony/config": "^3.0"
+    "symfony/config": "^3.0",
+    "symfony/process": "^3.0"
   },
   "require-dev": {
     "phpunit/phpunit": "^4.8"

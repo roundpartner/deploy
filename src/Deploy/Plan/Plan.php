@@ -2,8 +2,8 @@
 
 namespace RoundPartner\Deploy\Plan;
 
-use RoundPartner\Deploy\Entity\Request;
 use RoundPartner\Deploy\Container;
+use Symfony\Component\Process\Process;
 
 class Plan
 {
@@ -26,7 +26,7 @@ class Plan
 
         $config = $container->getConfig()->get($entity->full_name);
         if ($config === null) {
-            return;
+            throw new \Exception("No configuration found for {$entity->full_name}.");
         }
         $entity->clone_address = $config['repos'];
         $entity->location = $config['location'];
@@ -37,6 +37,14 @@ class Plan
 
         $this->dispatch();
 
+    }
+
+    /**
+     * @return Entity\Plan
+     */
+    public function getPlan()
+    {
+        return $this->entity;
     }
 
     public function dispatch()
@@ -57,21 +65,32 @@ class Plan
             }
         }
 
-        if (!file_exists($this->entity->location . '/' . $this->entity->directory . '/.git')) {
-            $command = sprintf('cd %s && git clone %s %s', $this->entity->location, $this->entity->clone_address, $this->entity->directory);
-            $this->execute($command);
+        $workingDirectory = $this->entity->location . '/' . $this->entity->directory;
+
+        if (!file_exists($workingDirectory . '/.git')) {
+            $cloneCommand = sprintf('git clone %s %s', $this->entity->clone_address, $this->entity->directory);
+            $this->process($cloneCommand, $this->entity->location);
         } else {
-            $command = sprintf('cd %s && git pull', $this->entity->location . '/' . $this->entity->directory);
-            $this->execute($command);
+            $pullCommand = sprintf('git pull');
+            $this->process($pullCommand, $workingDirectory);
         }
 
-        $command = sprintf('cd %s && %s', $this->entity->location . '/' . $this->entity->directory, $this->entity->command);
-        $this->execute($command);
+        $this->process($this->entity->command, $workingDirectory);
+
+        return true;
     }
 
-    private function execute($command)
+    /**
+     * @param string $command
+     * @param string $workingDirectory
+     *
+     * @return string
+     */
+    private function process($command, $workingDirectory)
     {
-        echo $command;
+        $process = new Process($command, $workingDirectory);
+        $process->mustRun();
+        return $process->getOutput();
     }
 
 }

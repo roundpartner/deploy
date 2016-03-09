@@ -12,13 +12,13 @@ class PlanFactoryTest extends PHPUnit_Framework_TestCase
         $request = new \RoundPartner\Deploy\Entity\Request();
         $request->repository = new \RoundPartner\Deploy\Entity\Repository();
         $request->repository->full_name = self::FULL_NAME;
-        $container = new \RoundPartner\Deploy\Container();
+        $container = new \RoundPartner\Test\Mocks\Container();
         $this->assertInstanceOf(self::INSTANCE_NAME, \RoundPartner\Deploy\Plan\PlanFactory::createPlan($container, $request));
     }
 
     public function testCreateWithEntity()
     {
-        $container = new \RoundPartner\Deploy\Container();
+        $container = new \RoundPartner\Test\Mocks\Container();
         $entity = new \RoundPartner\Deploy\Plan\Entity\Plan();
         $entity->full_name = self::FULL_NAME;
         $this->assertInstanceOf(self::INSTANCE_NAME, \RoundPartner\Deploy\Plan\PlanFactory::createWithEntity($container, $entity));

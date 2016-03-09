@@ -11,4 +11,9 @@ class ServerFactory
     {
         return new Server($container, Server::RUN_ONCE);
     }
+
+    public static function multiRun(Container $container, $iterations)
+    {
+        return new Server($container, $iterations);
+    }
 }
