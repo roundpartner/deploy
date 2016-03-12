@@ -12,14 +12,33 @@ class Config
 
     protected $config;
 
+    protected $configFile;
+
+    protected $configModifiedTime;
+
     public function __construct($configFile = 'config.ini')
     {
-        $config = dirname(__FILE__) . '/../../config/' . $configFile;
-        $this->config = parse_ini_file($config, true);
+        $this->configFile = $configFile;
+
     }
 
     public function get($key)
     {
-        return $this->config[$key];
+        $config = $this->getConfig($this->configFile);
+        return $config[$key];
+    }
+
+    /**
+     * @param $configFile
+     * @return array
+     */
+    protected function getConfig($configFile)
+    {
+        $config = dirname(__FILE__) . '/../../config/' . $configFile;
+        $configModifiedTime = filemtime($config);
+        if ($configModifiedTime > $this->configModifiedTime) {
+            $this->config = parse_ini_file($config, true);
+        }
+        return $this->config;
     }
 }
