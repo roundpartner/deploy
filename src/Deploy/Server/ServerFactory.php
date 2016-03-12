@@ -9,6 +9,7 @@ class ServerFactory
 
     /**
      * @param Container $container
+     *
      * @return Server
      */
     public static function singleRun(Container $container)
@@ -18,11 +19,13 @@ class ServerFactory
 
     /**
      * @param Container $container
-     * @param $iterations
+     * @param integer $iterations
+     * @param integer $sleep
+     *
      * @return Server
      */
-    public static function multiRun(Container $container, $iterations)
+    public static function multiRun(Container $container, $iterations, $sleep = Server::SLEEP_SECONDS)
     {
-        return new Server($container, $iterations);
+        return new Server($container, $iterations, $sleep);
     }
 }
