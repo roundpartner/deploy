@@ -78,7 +78,9 @@ class Plan
             $this->process($pullCommand, $workingDirectory);
         }
 
-        $this->process($this->entity->command, $workingDirectory);
+        if (false === $this->process($this->entity->command, $workingDirectory)) {
+            return false;
+        }
 
         return true;
     }

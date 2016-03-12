@@ -38,9 +38,6 @@ class Container
         $auth = require __DIR__ . '/../../vendor/rp/conf/auth.php';
         $cloud = CloudFactory::create($auth['opencloud']['username'], $auth['opencloud']['key'], $auth['opencloud']['secret']);
         $this->container->set('opencloud', $cloud);
-
-        $log = $this->container->get('logger');
-        $log->pushHandler(new StreamHandler('/tmp/deploy.log', Logger::INFO));
     }
 
     /**

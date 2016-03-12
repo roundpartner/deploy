@@ -4,3 +4,8 @@ services:
   logger:
     class: \Monolog\Logger
     arguments: ['file']
+    calls:
+      - [pushHandler, ['@applog']]
+  applog:
+    class: Monolog\Handler\StreamHandler
+    arguments: ['/tmp/deploy.log', 'INFO']

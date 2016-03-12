@@ -3,5 +3,10 @@ services:
     class: \RoundPartner\Deploy\Config
     arguments: ['config.example.ini']
   logger:
-    class: \Monolog\Logger
-    arguments: ['file']
+      class: \Monolog\Logger
+      arguments: ['file']
+      calls:
+        - [pushHandler, ['@applog']]
+  applog:
+    class: Monolog\Handler\StreamHandler
+    arguments: ['/tmp/deploy.log', 'INFO']
