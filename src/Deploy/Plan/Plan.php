@@ -49,8 +49,9 @@ class Plan
 
     public function dispatch()
     {
+        $cloudConfig = $this->container->getConfig()->get('cloud');
         $cloud = $this->container->getCloud();
-        $cloud->addMessage('deploy_dev', $this->entity);
+        $cloud->addMessage($cloudConfig['name'], $this->entity);
 
         return false;
     }

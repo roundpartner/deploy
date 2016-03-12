@@ -38,7 +38,8 @@ class Server
             return false;
         }
 
-        $plans = $this->container->getCloud()->getMessages('deploy_dev');
+        $cloudConfig = $this->container->getConfig()->get('cloud');
+        $plans = $this->container->getCloud()->getMessages($cloudConfig['name']);
         $this->runPlans($plans);
 
         ++$this->currentIteration;
