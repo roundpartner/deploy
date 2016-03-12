@@ -13,5 +13,9 @@ $body = file_get_contents('php://input');
 $secret = $_SERVER['GIT_SECRET'];
 
 $bootstrap = new \RoundPartner\Deploy\Bootstrap($headers, $body, $secret);
-$bootstrap->dispatch();
+if ($bootstrap->dispatch()) {
+    echo 'Request Complete.' . PHP_EOL;
+} else {
+    echo 'Running plan failed.' . PHP_EOL;
+}
 

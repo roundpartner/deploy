@@ -26,6 +26,7 @@ class RequestFactory
     public static function createRequest($request)
     {
         $entity = new Entity\Request();
+        $entity->ref = $request->ref;
         $entity->commits = self::createCommits($request->commits);
         $entity->head_commit = self::createCommit($request->head_commit);
         $entity->repository = self::createRepository($request->repository);
