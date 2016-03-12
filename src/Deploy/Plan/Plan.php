@@ -90,7 +90,7 @@ class Plan
         echo 'Running: ' . $command . PHP_EOL;
         $process = new Process($command, $workingDirectory);
         $process->mustRun();
-        echo 'Competed: ' . $command . PHP_EOL;
+        echo 'Completed: ' . $command . PHP_EOL;
         return $process->getOutput();
     }
 }
