@@ -2,6 +2,8 @@
 
 namespace RoundPartner\Deploy;
 
+use RoundPartner\Deploy\Entity\Commit;
+
 class RequestFactory
 {
 
@@ -24,8 +26,8 @@ class RequestFactory
     public static function createRequest($request)
     {
         $entity = new Entity\Request();
-        $entity->commits = $request->commits;
-        $entity->head_commit = $request->head_commit;
+        $entity->commits = self::createCommits($request->commits);
+        $entity->head_commit = self::createCommit($request->head_commit);
         $entity->repository = self::createRepository($request->repository);
         return $entity;
     }
@@ -42,6 +44,32 @@ class RequestFactory
         $entity->name = $repository->name;
         $entity->full_name = $repository->full_name;
         $entity->owner = $repository->owner;
+        return $entity;
+    }
+
+    /**
+     * @param object $commits
+     *
+     * @return Commit[]
+     */
+    private static function createCommits($commits)
+    {
+        $entities = array();
+        foreach ($commits as $commit) {
+            $entities[] = self::createCommit($commit);
+        }
+        return $entities;
+    }
+
+    /**
+     * @param $commit
+     *
+     * @return Commit
+     */
+    private static function createCommit($commit)
+    {
+        $entity = new Commit();
+        $entity->id = $commit->id;
         return $entity;
     }
 }
