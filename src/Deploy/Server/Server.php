@@ -16,6 +16,8 @@ class Server
 
     private $currentIteration;
 
+    const SLEEP_SECONDS = 60;
+
     public function __construct(Container $container, $iterations)
     {
         $this->container = $container;
@@ -26,10 +28,17 @@ class Server
     public function dispatch()
     {
         while ($this->runIteration()) {
-
+            if ($this->hasNextIteration()) {
+                sleep(self::SLEEP_SECONDS);
+            }
         }
 
-        return $this->currentIteration >= $this->iterations;
+        return ! $this->hasNextIteration();
+    }
+
+    protected function hasNextIteration()
+    {
+        return $this->currentIteration < $this->iterations;
     }
 
     protected function runIteration()
