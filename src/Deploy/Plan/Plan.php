@@ -35,8 +35,6 @@ class Plan
 
         $this->entity = $entity;
 
-        $this->dispatch();
-
     }
 
     /**
