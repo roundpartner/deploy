@@ -28,7 +28,7 @@ class ServerFactoryTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($server->dispatch());
     }
 
-    public function testDispatchMultpleRun()
+    public function testDispatchMultipleRun()
     {
         $server = \RoundPartner\Deploy\Server\ServerFactory::multiRun($this->container, 3);
         $this->assertTrue($server->dispatch());

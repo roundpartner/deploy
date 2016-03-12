@@ -16,12 +16,15 @@ class Server
 
     private $currentIteration;
 
+    private $sleep;
+
     const SLEEP_SECONDS = 60;
 
-    public function __construct(Container $container, $iterations)
+    public function __construct(Container $container, $iterations, $sleep = self::SLEEP_SECONDS)
     {
         $this->container = $container;
         $this->iterations = $iterations;
+        $this->sleep = $sleep;
         $this->currentIteration = 0;
     }
 
@@ -29,7 +32,7 @@ class Server
     {
         while ($this->runIteration()) {
             if ($this->hasNextIteration()) {
-                sleep(self::SLEEP_SECONDS);
+                sleep($this->sleep);
             }
         }
 

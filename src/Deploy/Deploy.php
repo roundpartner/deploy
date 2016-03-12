@@ -54,12 +54,13 @@ class Deploy
         }
 
         $plan = PlanFactory::createPlan($this->container, $this->request->getBody());
-        if (!$this->shell && !$plan->dispatch()) {
-            echo 'Running plan failed';
+        $response = $plan->dispatch();
+        if (!$this->shell && !$response) {
+            echo 'Running plan failed.' . PHP_EOL;
         }
 
         if (!$this->shell) {
-            echo 'Request Complete, nothing processed';
+            echo 'Request Complete, nothing processed.' . PHP_EOL;
         }
 
         return true;
