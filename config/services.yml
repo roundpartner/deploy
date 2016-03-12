@@ -1,3 +1,6 @@
 services:
   config:
     class: \RoundPartner\Deploy\Config
+  logger:
+    class: \Monolog\Logger
+    arguments: ['file']

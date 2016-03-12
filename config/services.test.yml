@@ -2,3 +2,6 @@ services:
   config:
     class: \RoundPartner\Deploy\Config
     arguments: ['config.example.ini']
+  logger:
+    class: \Monolog\Logger
+    arguments: ['file']

@@ -74,7 +74,7 @@ class Plan
             echo $this->process($pullCommand, $workingDirectory);
         }
 
-        echo $this->process($this->entity->command, $workingDirectory);
+        $this->process($this->entity->command, $workingDirectory);
 
         return true;
     }
@@ -87,10 +87,17 @@ class Plan
      */
     private function process($command, $workingDirectory)
     {
-        echo 'Running: ' . $command . PHP_EOL;
+        $this->container->getLogger()->addInfo('Running: ' . $command);
         $process = new Process($command, $workingDirectory);
-        $process->mustRun();
-        echo 'Completed: ' . $command . PHP_EOL;
-        return $process->getOutput();
+        try {
+            $process->mustRun();
+        } catch(\Exception $exception) {
+            $this->container->getLogger()->addError($exception->getMessage());
+        }
+        $this->container->getLogger()->addInfo('Completed: ' . $command);
+
+        $output = $process->getOutput();
+        $this->container->getLogger()->addInfo('Output: ' . $output);
+        return $output;
     }
 }
