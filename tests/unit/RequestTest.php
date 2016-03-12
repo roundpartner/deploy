@@ -33,6 +33,18 @@ class RequestTest extends PHPUnit_Framework_TestCase
      *
      * @dataProvider \Providers\RequestProvider::requestProvider()
      */
+    public function testGetHeaderThatDoesNotExist($headers, $body)
+    {
+        $request = new \RoundPartner\Deploy\Request($headers, $body);
+        $this->assertFalse($request->getHeader('Invalid'));
+    }
+
+    /**
+     * @param array[] $headers
+     * @param string $body
+     *
+     * @dataProvider \Providers\RequestProvider::requestProvider()
+     */
     public function testGetBody($headers, $body)
     {
         $request = new \RoundPartner\Deploy\Request($headers, $body);
