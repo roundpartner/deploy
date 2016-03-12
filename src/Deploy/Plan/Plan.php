@@ -3,6 +3,7 @@
 namespace RoundPartner\Deploy\Plan;
 
 use RoundPartner\Deploy\Container;
+use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 
 class Plan
@@ -89,10 +90,12 @@ class Plan
     {
         $this->container->getLogger()->addInfo('Running: ' . $command);
         $process = new Process($command, $workingDirectory);
+        $process->setTimeout(3600);
         try {
             $process->mustRun();
-        } catch(\Exception $exception) {
+        } catch(ProcessFailedException $exception) {
             $this->container->getLogger()->addError($exception->getMessage());
+            return false;
         }
         $this->container->getLogger()->addInfo('Completed: ' . $command);
 
