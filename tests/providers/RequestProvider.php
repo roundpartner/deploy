@@ -5,6 +5,7 @@ namespace Providers;
 use RoundPartner\Deploy\Entity\Commit;
 use RoundPartner\Deploy\Entity\Repository;
 use RoundPartner\Deploy\Entity\Request;
+use RoundPartner\Deploy\RequestFactory;
 use RoundPartner\VerifyHash\VerifyHash;
 
 class RequestProvider
@@ -14,6 +15,7 @@ class RequestProvider
     public static function requestProvider()
     {
         $request = new Request();
+        $request->ref = 'refs/heads/master';
         $request->commits = [self::generateCommit()];
         $request->head_commit = self::generateCommit();
         $request->repository = new Repository();
@@ -21,6 +23,7 @@ class RequestProvider
         $request->repository->id = 52612292;
         $request->repository->name = 'deploy';
         $request->repository->owner = null;
+        $request = RequestFactory::createRequest($request);
         $body = json_encode($request);
 
         return array(array(
