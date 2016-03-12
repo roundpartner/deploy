@@ -98,7 +98,7 @@ class Plan
         $process->setTimeout(3600);
         try {
             $process->mustRun();
-        } catch(ProcessFailedException $exception) {
+        } catch (ProcessFailedException $exception) {
             $this->logError($exception->getMessage());
             return false;
         }
