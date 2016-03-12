@@ -10,5 +10,5 @@ require_once 'vendor/autoload.php';
 
 $container = new \RoundPartner\Deploy\Container();
 
-$server = new \RoundPartner\Deploy\Server\ServerFactory();
-$server->singleRun($container);
+$server = \RoundPartner\Deploy\Server\ServerFactory::singleRun($container);
+$server->dispatch();
