@@ -18,11 +18,6 @@ class Deploy
     protected $secret;
 
     /**
-     * @var bool
-     */
-    protected $shell;
-
-    /**
      * @var Container
      */
     protected $container;
@@ -36,8 +31,6 @@ class Deploy
      */
     public function __construct(Request $request, $secret, Container $container)
     {
-        $this->shell = isset($_SERVER['SHELL']);
-
         $this->request = $request;
         $this->secret = $secret;
 
@@ -53,22 +46,17 @@ class Deploy
             return false;
         }
 
+        if ($this->request->getBody()->ref !== 'refs/heads/master') {
+            $this->container->getLogger()->addInfo('Skipping deployment: ' . $this->request->getBody()->ref);
+            return false;
+        }
+
         $plan = $this->getPlan();
         if (!$plan) {
             return false;
         }
 
-        $response = $plan->dispatch();
-
-        if (!$this->shell && !$response) {
-            echo 'Running plan failed.' . PHP_EOL;
-        }
-
-        if (!$this->shell) {
-            echo 'Request Complete.' . PHP_EOL;
-        }
-
-        return true;
+        return $plan->dispatch();
     }
 
     /**
@@ -79,9 +67,7 @@ class Deploy
         try {
             return PlanFactory::createPlan($this->container, $this->request->getBody());
         } catch (\Exception $exception) {
-            if (!$this->shell) {
-                echo $exception->getMessage() . PHP_EOL;
-            }
+            $this->container->getLogger()->addError($exception->getMessage());
             return false;
         }
     }
