@@ -4,6 +4,12 @@ namespace RoundPartner\Deploy\Entity;
 
 class Request
 {
+
+    /**
+     * @var string
+     */
+    public $ref;
+
     /**
      * @var Commit[]
      */
