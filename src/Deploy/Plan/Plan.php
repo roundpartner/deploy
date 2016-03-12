@@ -87,6 +87,7 @@ class Plan
      */
     private function process($command, $workingDirectory)
     {
+        echo 'Running: ' . $command;
         $process = new Process($command, $workingDirectory);
         $process->mustRun();
         return $process->getOutput();
