@@ -7,6 +7,7 @@ class RequestFactory
 
     /**
      * @param string $json
+     *
      * @return Entity\Request
      */
     public static function parse($json)
@@ -15,9 +16,9 @@ class RequestFactory
         return self::createRequest($request);
     }
 
-
     /**
      * @param object $request
+     *
      * @return Entity\Request
      */
     public static function createRequest($request)
@@ -31,6 +32,7 @@ class RequestFactory
 
     /**
      * @param object $repository
+     *
      * @return Entity\Repository
      */
     private static function createRepository($repository)
