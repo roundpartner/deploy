@@ -87,7 +87,7 @@ class Plan
      */
     private function process($command, $workingDirectory)
     {
-        echo 'Running: ' . $command;
+        echo 'Running: ' . $command . PHP_EOL;
         $process = new Process($command, $workingDirectory);
         $process->mustRun();
         return $process->getOutput();
