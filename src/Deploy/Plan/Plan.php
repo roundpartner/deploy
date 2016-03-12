@@ -91,19 +91,44 @@ class Plan
      */
     private function process($command, $workingDirectory)
     {
-        $this->container->getLogger()->addInfo('Running: ' . $command);
+        $this->logInfo($command, 'Running');
         $process = new Process($command, $workingDirectory);
         $process->setTimeout(3600);
         try {
             $process->mustRun();
         } catch(ProcessFailedException $exception) {
-            $this->container->getLogger()->addError($exception->getMessage());
+            $this->logError($exception->getMessage());
             return false;
         }
-        $this->container->getLogger()->addInfo('Completed: ' . $command);
+        $this->logInfo($command, 'Completed');
 
         $output = $process->getOutput();
-        $this->container->getLogger()->addInfo('Output: ' . $output);
+        if (!$output) {
+            $output = $process->getErrorOutput();
+        }
+        $this->logInfo($output);
         return $output;
+    }
+
+    /**
+     * @param string $output
+     * @param string $prefix
+     */
+    private function logInfo($output, $prefix = 'Output')
+    {
+        foreach (explode("\n", $output) as $line) {
+            $this->container->getLogger()->addInfo($prefix . ': ' . $line);
+        }
+    }
+
+    /**
+     * @param string $output
+     * @param string $prefix
+     */
+    private function logError($output, $prefix = 'Error')
+    {
+        foreach (explode("\n", $output) as $line) {
+            $this->container->getLogger()->addError($prefix . ': ' . $line);
+        }
     }
 }

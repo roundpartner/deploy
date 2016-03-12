@@ -17,7 +17,7 @@ class RequestProvider
         $request->commits = [self::generateCommit()];
         $request->head_commit = self::generateCommit();
         $request->repository = new Repository();
-        $request->repository->full_name = 'roundpartner/deploy';
+        $request->repository->full_name = 'symfony/yaml';
         $request->repository->id = 52612292;
         $request->repository->name = 'deploy';
         $request->repository->owner = null;

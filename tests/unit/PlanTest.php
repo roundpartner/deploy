@@ -24,4 +24,10 @@ class PlanTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($this->plan->deploy());
     }
 
+    public function testDeployFails()
+    {
+        $this->plan->getPlan()->command = 'false';
+        $this->assertFalse($this->plan->deploy());
+    }
+
 }
