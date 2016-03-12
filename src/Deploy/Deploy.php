@@ -65,7 +65,7 @@ class Deploy
         }
 
         if (!$this->shell) {
-            echo 'Request Complete, nothing processed.' . PHP_EOL;
+            echo 'Request Complete.' . PHP_EOL;
         }
 
         return true;
