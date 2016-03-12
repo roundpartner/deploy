@@ -25,7 +25,7 @@ class Plan
         $entity->full_name = $repositoryName;
 
         $config = $container->getConfig()->get($entity->full_name);
-        if ($config === null) {
+        if ($config === false) {
             throw new \Exception("No configuration found for {$entity->full_name}.");
         }
         $entity->clone_address = $config['repos'];
@@ -51,7 +51,7 @@ class Plan
         $cloud = $this->container->getCloud();
         $cloud->addMessage($cloudConfig['name'], $this->entity);
 
-        return false;
+        return true;
     }
 
     public function deploy()

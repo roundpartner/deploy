@@ -53,8 +53,13 @@ class Deploy
             return false;
         }
 
-        $plan = PlanFactory::createPlan($this->container, $this->request->getBody());
+        $plan = $this->getPlan();
+        if (!$plan) {
+            return false;
+        }
+
         $response = $plan->dispatch();
+
         if (!$this->shell && !$response) {
             echo 'Running plan failed.' . PHP_EOL;
         }
@@ -64,5 +69,20 @@ class Deploy
         }
 
         return true;
+    }
+
+    /**
+     * @return Plan\Plan|bool
+     */
+    protected function getPlan()
+    {
+        try {
+            return PlanFactory::createPlan($this->container, $this->request->getBody());
+        } catch (\Exception $exception) {
+            if (!$this->shell) {
+                echo $exception->getMessage() . PHP_EOL;
+            }
+            return false;
+        }
     }
 }

@@ -25,6 +25,9 @@ class Config
     public function get($key)
     {
         $config = $this->getConfig($this->configFile);
+        if (!array_key_exists($key, $config)) {
+            return false;
+        }
         return $config[$key];
     }
 
