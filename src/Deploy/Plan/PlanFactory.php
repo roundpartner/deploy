@@ -17,5 +17,4 @@ class PlanFactory
     {
         return new Plan($container, $plan->full_name);
     }
-
 }

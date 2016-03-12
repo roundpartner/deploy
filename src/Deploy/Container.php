@@ -52,5 +52,4 @@ class Container
     {
         return $this->container->get('opencloud');
     }
-
 }

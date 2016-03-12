@@ -92,5 +92,4 @@ class Plan
         $process->mustRun();
         return $process->getOutput();
     }
-
 }

@@ -37,5 +37,4 @@ class HubSignature
         $verifyHash = new VerifyHash($this->secret);
         return $verifyHash->verify($requestHash, $request->getRawBody(), $algorithm);
     }
-
 }

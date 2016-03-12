@@ -4,7 +4,8 @@ namespace RoundPartner\Deploy;
 
 use RoundPartner\Deploy\Plan\PlanFactory;
 
-class Deploy {
+class Deploy
+{
 
     /**
      * @var Request
@@ -63,6 +64,4 @@ class Deploy {
 
         return true;
     }
-
 }
-

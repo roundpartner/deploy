@@ -22,5 +22,4 @@ class Config
     {
         return $this->config[$key];
     }
-
 }

@@ -25,7 +25,9 @@ class Server
 
     public function dispatch()
     {
-        while ($this->runIteration());
+        while ($this->runIteration()) {
+
+        }
 
         return $this->currentIteration >= $this->iterations;
     }
@@ -53,5 +55,4 @@ class Server
             $plan->deploy();
         }
     }
-
 }
