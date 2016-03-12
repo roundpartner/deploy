@@ -2,7 +2,8 @@
 
 namespace RoundPartner\Deploy;
 
-use Cloud\Cloud;
+use RoundPartner\Cloud\Cloud;
+use RoundPartner\Cloud\CloudFactory;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
@@ -33,7 +34,7 @@ class Container
         $this->container = $container;
 
         $auth = require __DIR__ . '/../../vendor/rp/conf/auth.php';
-        $cloud = new Cloud($auth['opencloud']['username'], $auth['opencloud']['key'], $auth['opencloud']['secret']);
+        $cloud = CloudFactory::create($auth['opencloud']['username'], $auth['opencloud']['key'], $auth['opencloud']['secret']);
         $this->container->set('opencloud', $cloud);
     }
 

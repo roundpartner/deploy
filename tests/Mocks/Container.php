@@ -24,7 +24,8 @@ class Container extends \RoundPartner\Deploy\Container
     public function getCloud()
     {
         if ($this->cloud === null) {
-            $this->cloud = new Cloud('username', 'key', 'secret');
+            $service = new CloudService();
+            $this->cloud = new Cloud($service, 'secret');
         }
         return $this->cloud;
     }

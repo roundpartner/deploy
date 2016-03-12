@@ -2,25 +2,26 @@
 
 namespace RoundPartner\Test\Mocks;
 
+use RoundPartner\Cloud\CloudInterface;
+
 class Cloud
-implements \Cloud\CloudInterface
+implements CloudInterface
 {
 
     /**
-     * @var array
+     * @var CloudService
      */
-    protected $messages;
+    protected $client;
 
     /**
      * Cloud constructor.
      *
-     * @param string $username
-     * @param string $apiKey
+     * @param \RoundPartner\Cloud\Service\Cloud $client
      * @param string $secret
      */
-    public function __construct($username, $apiKey, $secret)
+    public function __construct(\RoundPartner\Cloud\Service\Cloud $client, $secret)
     {
-        $this->messages = array();
+        $this->client = $client;
     }
 
     /**
@@ -30,11 +31,7 @@ implements \Cloud\CloudInterface
      */
     public function addMessage($queue, $message)
     {
-        if (!array_key_exists($queue, $this->messages)) {
-            $this->messages[$queue] = array();
-        }
-        $this->messages[$queue][] = $message;
-        return true;
+        return $this->client->addMessage($queue, $message);
     }
 
     /**
@@ -46,11 +43,7 @@ implements \Cloud\CloudInterface
      */
     public function getMessages($queue, $limit = 10)
     {
-        $response = array();
-        if (!array_key_exists($queue, $this->messages)) {
-            return $response;
-        }
-        return array_splice($this->messages[$queue], 0, $limit);
+        return $this->client->getMessages($queue, $limit);
     }
 
 }

@@ -12,6 +12,6 @@ class ContainerTest extends PHPUnit_Framework_TestCase
     public function testGetCloud()
     {
         $container = new \RoundPartner\Deploy\Container();
-        $this->assertInstanceOf('\Cloud\Cloud', $container->getCloud());
+        $this->assertInstanceOf('\RoundPartner\Cloud\Cloud', $container->getCloud());
     }
 }
