@@ -43,6 +43,9 @@ class Deploy {
         $this->container = $container;
     }
 
+    /**
+     * @return bool
+     */
     public function dispatch()
     {
         if (!$this->request->verify($this->secret)) {

@@ -16,19 +16,22 @@ class Bootstrap
      * @param string[] $headers
      * @param string $body
      * @param string $secret
+     * @param Container $container
      */
-    public function __construct($headers, $body, $secret)
+    public function __construct($headers, $body, $secret, $container = null)
     {
         $request = new Request($headers, $body);
-        $container = new Container();
+        if ($container === null) {
+            $container = new Container();
+        }
         $this->deploy = new Deploy($request, $secret, $container);
     }
 
     /**
-     *
+     * @return bool
      */
     public function dispatch()
     {
-        $this->deploy->dispatch();
+        return $this->deploy->dispatch();
     }
 }
