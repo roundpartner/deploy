@@ -68,13 +68,13 @@ class Plan
 
         if (!file_exists($workingDirectory . '/.git')) {
             $cloneCommand = sprintf('git clone %s %s', $this->entity->clone_address, $this->entity->directory);
-            $this->process($cloneCommand, $this->entity->location);
+            echo $this->process($cloneCommand, $this->entity->location);
         } else {
             $pullCommand = sprintf('git pull');
-            $this->process($pullCommand, $workingDirectory);
+            echo $this->process($pullCommand, $workingDirectory);
         }
 
-        $this->process($this->entity->command, $workingDirectory);
+        echo $this->process($this->entity->command, $workingDirectory);
 
         return true;
     }
