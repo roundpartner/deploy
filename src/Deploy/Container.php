@@ -6,6 +6,7 @@ use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use RoundPartner\Cloud\Cloud;
 use RoundPartner\Cloud\CloudFactory;
+use RoundPartner\Conf\Service;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
@@ -35,8 +36,8 @@ class Container
         $loader->load($config . '.yml');
         $this->container = $container;
 
-        $auth = require __DIR__ . '/../../vendor/rp/conf/auth.php';
-        $cloud = CloudFactory::create($auth['opencloud']['username'], $auth['opencloud']['key'], $auth['opencloud']['secret']);
+        $auth = Service::get('opencloud');
+        $cloud = CloudFactory::create($auth['username'], $auth['key'], $auth['secret']);
         $this->container->set('opencloud', $cloud);
     }
 
