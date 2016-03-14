@@ -36,6 +36,30 @@ class RequestProvider
         ));
     }
 
+    public static function requestProviderNoPlan()
+    {
+        $request = new Request();
+        $request->ref = 'refs/heads/master';
+        $request->commits = [self::generateCommit()];
+        $request->head_commit = self::generateCommit();
+        $request->repository = new Repository();
+        $request->repository->full_name = 'wont/exist';
+        $request->repository->id = 52612292;
+        $request->repository->name = 'deploy';
+        $request->repository->owner = null;
+        $request = RequestFactory::createRequest($request);
+        $body = json_encode($request);
+
+        return array(array(
+            array(
+                'X-Hub-Signature' => self::getHash($body),
+                'X-GitHub-Event' => 'push',
+            ),
+            $body,
+            self::SECRET
+        ));
+    }
+
     /**
      * @return Commit
      */
