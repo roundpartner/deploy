@@ -31,27 +31,40 @@ class ChainedProcess
     public function mustRun()
     {
         foreach ($this->chain as $process) {
-            if (!is_dir($process->getWorkingDirectory())) {
-                throw new \Exception("Working directory {$process->getWorkingDirectory()} does not exist");
+            if (!$this->mustRunProcess($process)) {
                 return false;
             }
-            $process->setTimeout(3600);
-            $this->logInfo($process->getCommandLine(), 'Running');
-            try {
-                $process->mustRun();
-            } catch (ProcessFailedException $exception) {
-                $this->logError($exception->getMessage());
-                return false;
-            }
-            $this->logInfo($process->getCommandLine(), 'Completed');
-            $output = $process->getOutput();
-            if (!$output) {
-                $output = $process->getErrorOutput();
-            }
-            $this->logInfo($output);
-            if (!$process->isSuccessful()) {
-                return false;
-            }
+        }
+        return true;
+    }
+
+    /**
+     * @param Process $process
+     *
+     * @return bool
+     * @throws \Exception
+     */
+    private function mustRunProcess(Process $process)
+    {
+        if (!is_dir($process->getWorkingDirectory())) {
+            throw new \Exception("Working directory {$process->getWorkingDirectory()} does not exist");
+        }
+        $process->setTimeout(3600);
+        $this->logInfo($process->getCommandLine(), 'Running');
+        try {
+            $process->mustRun();
+        } catch (ProcessFailedException $exception) {
+            $this->logError($exception->getMessage());
+            return false;
+        }
+        $this->logInfo($process->getCommandLine(), 'Completed');
+        $output = $process->getOutput();
+        if (!$output) {
+            $output = $process->getErrorOutput();
+        }
+        $this->logInfo($output);
+        if (!$process->isSuccessful()) {
+            return false;
         }
         return true;
     }
