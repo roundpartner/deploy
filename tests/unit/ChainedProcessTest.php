@@ -41,11 +41,4 @@ class ChainedProcessTest extends \PHPUnit_Framework_TestCase
         $this->setExpectedException('\Exception', 'Working directory /tmp/foo/bar does not exist');
         $changedProcess->mustRun();
     }
-
-    public function testMustRunLongCommand()
-    {
-        $changedProcess = $this->chainedProcess;
-        $changedProcess->addProcess(new Process('sleep 1; echo one; sleep 2; echo two; sleep 3; echo 3', '/tmp'));
-        $changedProcess->mustRun();
-    }
 }
