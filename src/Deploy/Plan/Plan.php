@@ -5,7 +5,6 @@ namespace RoundPartner\Deploy\Plan;
 use RoundPartner\Deploy\ChainedProcess;
 use RoundPartner\Deploy\Container;
 use RoundPartner\Deploy\ProcessFactory;
-use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 
 class Plan
@@ -104,34 +103,16 @@ class Plan
     /**
      * @param Process $process
      *
-     * @return bool|string
+     * @return bool
      */
     private function runProcess(Process $process)
     {
-        $command = $process->getCommandLine();
         $process->setTimeout(3600);
 
-        if (!is_dir($process->getWorkingDirectory())) {
-            return false;
-        }
+        $chain = new ChainedProcess($this->container);
+        $chain->addProcess($process);
+        return $chain->mustRun();
 
-        $this->logInfo($command, 'Running');
-        try {
-            $chain = new ChainedProcess();
-            $chain->addProcess($process);
-            $chain->mustRun();
-        } catch (ProcessFailedException $exception) {
-            $this->logError($exception->getMessage());
-            return false;
-        }
-        $this->logInfo($command, 'Completed');
-
-        $output = $process->getOutput();
-        if (!$output) {
-            $output = $process->getErrorOutput();
-        }
-        $this->logInfo($output);
-        return $output;
     }
 
     /**

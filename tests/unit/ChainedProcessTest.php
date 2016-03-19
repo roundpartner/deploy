@@ -3,24 +3,42 @@
 namespace RoundPartner\Test\Unit;
 
 use RoundPartner\Deploy\ChainedProcess;
+use RoundPartner\Test\Mocks\Container;
 use Symfony\Component\Process\Process;
 
 class ChainedProcessTest extends \PHPUnit_Framework_TestCase
 {
+
+    /**
+     * @var ChainedProcess
+     */
+    protected $chainedProcess;
+    
+    public function setUp()
+    {
+        $this->chainedProcess = new ChainedProcess(new Container());
+        $this->chainedProcess->addProcess(new Process('true', '/tmp'));
+    }
+
     public function testMustRun()
     {
-        $changedProcess = new ChainedProcess();
+        $changedProcess = $this->chainedProcess;
         $changedProcess->addProcess(new Process('true', '/tmp'));
-        $changedProcess->addProcess(new Process('true', '/tmp'));
-        $changedProcess->mustRun();
+        $this->assertTrue($changedProcess->mustRun());
     }
 
     public function testMustRunFails()
     {
-        $changedProcess = new ChainedProcess();
-        $changedProcess->addProcess(new Process('true', '/tmp'));
+        $changedProcess = $this->chainedProcess;
         $changedProcess->addProcess(new Process('false', '/tmp'));
-        $this->setExpectedException('\Exception', 'The command "false" failed');
+        $this->assertFalse($changedProcess->mustRun());
+    }
+
+    public function testMustRunWrongDirectory()
+    {
+        $changedProcess = $this->chainedProcess;
+        $changedProcess->addProcess(new Process('true', '/tmp/foo/bar'));
+        $this->setExpectedException('\Exception', 'Working directory /tmp/foo/bar does not exist');
         $changedProcess->mustRun();
     }
 }
