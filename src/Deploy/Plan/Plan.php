@@ -2,6 +2,7 @@
 
 namespace RoundPartner\Deploy\Plan;
 
+use RoundPartner\Deploy\ChainedProcess;
 use RoundPartner\Deploy\Container;
 use RoundPartner\Deploy\ProcessFactory;
 use Symfony\Component\Process\Exception\ProcessFailedException;
@@ -116,7 +117,9 @@ class Plan
 
         $this->logInfo($command, 'Running');
         try {
-            $process->mustRun();
+            $chain = new ChainedProcess();
+            $chain->addProcess($process);
+            $chain->mustRun();
         } catch (ProcessFailedException $exception) {
             $this->logError($exception->getMessage());
             return false;
