@@ -69,12 +69,15 @@ class Plan
         $workingDirectory = $this->entity->location . '/' . $this->entity->directory;
 
         if (!file_exists($workingDirectory . '/.git')) {
-            $this->runProcess(ProcessFactory::createGitClone($this->entity->clone_address, $this->entity->directory, $workingDirectory));
+            $result = $this->runProcess(ProcessFactory::createGitClone($this->entity->clone_address, $this->entity->directory, $this->entity->location));
+            if (!$result) {
+                return false;
+            }
             $result = $this->runProcess(ProcessFactory::createGitCheckout('master', $workingDirectory));
         } else {
             $result = $this->runProcess(ProcessFactory::createGitPull($workingDirectory));
         }
-        if (false === $result) {
+        if (!$result) {
             return false;
         }
 
@@ -106,6 +109,11 @@ class Plan
     {
         $command = $process->getCommandLine();
         $process->setTimeout(3600);
+
+        if (!is_dir($process->getWorkingDirectory())) {
+            return false;
+        }
+
         $this->logInfo($command, 'Running');
         try {
             $process->mustRun();
