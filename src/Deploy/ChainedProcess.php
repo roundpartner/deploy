@@ -35,6 +35,7 @@ class ChainedProcess
                 throw new \Exception("Working directory {$process->getWorkingDirectory()} does not exist");
                 return false;
             }
+            $process->setTimeout(3600);
             $this->logInfo($process->getCommandLine(), 'Running');
             try {
                 $process->mustRun();

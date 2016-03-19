@@ -107,8 +107,6 @@ class Plan
      */
     private function runProcess(Process $process)
     {
-        $process->setTimeout(3600);
-
         $chain = new ChainedProcess($this->container);
         $chain->addProcess($process);
         return $chain->mustRun();
