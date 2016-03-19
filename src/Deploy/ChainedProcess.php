@@ -51,18 +51,24 @@ class ChainedProcess
         }
         $process->setTimeout(3600);
         $this->logInfo($process->getCommandLine(), 'Running');
-        try {
-            $process->mustRun();
-        } catch (ProcessFailedException $exception) {
-            $this->logError($exception->getMessage());
+        $process->start();
+        while ($process->isRunning()) {
+            usleep(250);
+            $output = $process->getIncrementalOutput();
+            if ($output) {
+                $this->logInfo($output);
+            }
+        }
+        if (!$process->isSuccessful()) {
+            $this->logError(new ProcessFailedException($process));
             return false;
         }
-        $this->logInfo($process->getCommandLine(), 'Completed');
-        $output = $process->getOutput();
+        $output = $process->getIncrementalOutput();
         if (!$output) {
             $output = $process->getErrorOutput();
         }
         $this->logInfo($output);
+        $this->logInfo($process->getCommandLine(), 'Completed');
         if (!$process->isSuccessful()) {
             return false;
         }
@@ -86,6 +92,9 @@ class ChainedProcess
     private function logInfo($output, $prefix = 'Output')
     {
         foreach (explode("\n", $output) as $line) {
+            if (!trim($line)) {
+                continue;
+            }
             $this->container->getLogger()->addInfo($prefix . ': ' . $line);
         }
     }
