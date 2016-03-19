@@ -4,8 +4,7 @@ namespace RoundPartner\Test\Mocks;
 
 use RoundPartner\Cloud\CloudInterface;
 
-class Cloud
-implements CloudInterface
+class Cloud implements CloudInterface
 {
 
     /**
@@ -45,5 +44,4 @@ implements CloudInterface
     {
         return $this->client->getMessages($queue, $limit);
     }
-
 }

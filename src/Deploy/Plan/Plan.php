@@ -3,6 +3,7 @@
 namespace RoundPartner\Deploy\Plan;
 
 use RoundPartner\Deploy\Container;
+use RoundPartner\Deploy\ProcessFactory;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 
@@ -68,14 +69,13 @@ class Plan
         $workingDirectory = $this->entity->location . '/' . $this->entity->directory;
 
         if (!file_exists($workingDirectory . '/.git')) {
-            $cloneCommand = sprintf('git clone %s %s', $this->entity->clone_address, $this->entity->directory);
-            $this->process($cloneCommand, $this->entity->location);
-
-            $checkOutCommand = 'git checkout master';
-            $this->process($checkOutCommand, $workingDirectory);
+            $this->runProcess(ProcessFactory::createGitClone($this->entity->clone_address, $this->entity->directory, $workingDirectory));
+            $result = $this->runProcess(ProcessFactory::createGitCheckout('master', $workingDirectory));
         } else {
-            $pullCommand = sprintf('git pull');
-            $this->process($pullCommand, $workingDirectory);
+            $result = $this->runProcess(ProcessFactory::createGitPull($workingDirectory));
+        }
+        if (false === $result) {
+            return false;
         }
 
         if (false === $this->process($this->entity->command, $workingDirectory)) {
@@ -93,9 +93,20 @@ class Plan
      */
     private function process($command, $workingDirectory)
     {
-        $this->logInfo($command, 'Running');
         $process = new Process($command, $workingDirectory);
+        return $this->runProcess($process);
+    }
+
+    /**
+     * @param Process $process
+     *
+     * @return bool|string
+     */
+    private function runProcess(Process $process)
+    {
+        $command = $process->getCommandLine();
         $process->setTimeout(3600);
+        $this->logInfo($command, 'Running');
         try {
             $process->mustRun();
         } catch (ProcessFailedException $exception) {

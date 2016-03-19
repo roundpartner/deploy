@@ -40,5 +40,4 @@ class PlanTest extends PHPUnit_Framework_TestCase
         $this->setExpectedException('\Exception', 'No configuration found');
         new \RoundPartner\Deploy\Plan\Plan($this->container, 'wont/exist');
     }
-
 }

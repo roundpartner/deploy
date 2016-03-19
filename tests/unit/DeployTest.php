@@ -39,5 +39,4 @@ class DeployTest extends PHPUnit_Framework_TestCase
         $deploy = new \RoundPartner\Deploy\Deploy($request, $secret, $this->container);
         $this->assertFalse($deploy->dispatch());
     }
-
 }

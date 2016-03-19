@@ -27,5 +27,4 @@ class ContainerTest extends PHPUnit_Framework_TestCase
     {
         $this->container->getLogger();
     }
-
 }

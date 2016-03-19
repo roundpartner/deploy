@@ -76,5 +76,4 @@ class RequestProvider
         $hash = $verifyHash->hash($body);
         return "sha1={$hash}";
     }
-
 }

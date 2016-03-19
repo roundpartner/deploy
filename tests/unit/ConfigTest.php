@@ -9,5 +9,4 @@ class ConfigTest extends PHPUnit_Framework_TestCase
         $config = $config->get('symfony/yaml');
         $this->assertArrayHasKey('cmd', $config);
     }
-
 }

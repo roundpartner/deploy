@@ -23,5 +23,4 @@ class PlanFactoryTest extends PHPUnit_Framework_TestCase
         $entity->full_name = self::FULL_NAME;
         $this->assertInstanceOf(self::INSTANCE_NAME, \RoundPartner\Deploy\Plan\PlanFactory::createWithEntity($container, $entity));
     }
-
 }
