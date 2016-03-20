@@ -43,6 +43,7 @@ class Deploy
     public function dispatch()
     {
         if (!$this->request->verify($this->secret)) {
+            $this->container->getLogger()->addError('Secret verification failed');
             return false;
         }
 
@@ -56,6 +57,7 @@ class Deploy
             return false;
         }
 
+        $this->container->getLogger()->addInfo('Dispatching plan');
         return $plan->dispatch();
     }
 
