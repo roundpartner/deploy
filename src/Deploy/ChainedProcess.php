@@ -58,6 +58,10 @@ class ChainedProcess
             if ($output) {
                 $this->logInfo($output);
             }
+            $output = $process->getIncrementalErrorOutput();
+            if ($output) {
+                $this->logError($output);
+            }
         }
         if (!$process->isSuccessful()) {
             $this->logError(new ProcessFailedException($process));
