@@ -1,5 +1,5 @@
-# deploy
-Deployment Scripts
+# Deploy
+This allows deploying git repos on push
 
 ## Testing
 ```bash
