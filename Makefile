@@ -1,3 +1,3 @@
 all:
-	composer update --no-dev
+	composer update --no-dev -vvv
 	composer dumpautoload --optimize
