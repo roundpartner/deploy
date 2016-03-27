@@ -4,6 +4,7 @@ namespace RoundPartner\Deploy\Plan;
 
 use RoundPartner\Deploy\ChainedProcess;
 use RoundPartner\Deploy\Container;
+use RoundPartner\Deploy\Exception\NoPlanException;
 use RoundPartner\Deploy\ProcessFactory;
 use Symfony\Component\Process\Process;
 
@@ -28,7 +29,7 @@ class Plan
 
         $config = $container->getConfig()->get($entity->full_name);
         if ($config === false) {
-            throw new \Exception("No configuration found for {$entity->full_name}.");
+            throw new NoPlanException("No configuration found for {$entity->full_name}.");
         }
         $entity->clone_address = $config['repos'];
         $entity->location = $config['location'];
@@ -111,27 +112,5 @@ class Plan
         $chain->addProcess($process);
         return $chain->mustRun();
 
-    }
-
-    /**
-     * @param string $output
-     * @param string $prefix
-     */
-    private function logInfo($output, $prefix = 'Output')
-    {
-        foreach (explode("\n", $output) as $line) {
-            $this->container->getLogger()->addInfo($prefix . ': ' . $line);
-        }
-    }
-
-    /**
-     * @param string $output
-     * @param string $prefix
-     */
-    private function logError($output, $prefix = 'Error')
-    {
-        foreach (explode("\n", $output) as $line) {
-            $this->container->getLogger()->addError($prefix . ': ' . $line);
-        }
     }
 }

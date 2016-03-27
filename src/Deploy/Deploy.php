@@ -2,6 +2,7 @@
 
 namespace RoundPartner\Deploy;
 
+use RoundPartner\Deploy\Exception\NoPlanException;
 use RoundPartner\Deploy\Plan\PlanFactory;
 
 class Deploy
@@ -68,6 +69,8 @@ class Deploy
     {
         try {
             return PlanFactory::createPlan($this->container, $this->request->getBody());
+        } catch (NoPlanException $exception) {
+            $this->container->getLogger()->addInfo($exception->getMessage());
         } catch (\Exception $exception) {
             $this->container->getLogger()->addError($exception->getMessage());
             return false;
