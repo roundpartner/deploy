@@ -51,7 +51,15 @@ class Server
         }
 
         $cloudConfig = $this->container->getConfig()->get('cloud');
-        $plans = $this->container->getCloud()->getMessages($cloudConfig['name']);
+        $messages = $this->container->getCloud()
+            ->queue($cloudConfig['name'])
+            ->getMessages();
+        $plans = array();
+        foreach ($messages as $message) {
+            $plans[] = $message->getBody();
+            $message->delete();
+        }
+        
         $this->runPlans($plans);
 
         ++$this->currentIteration;

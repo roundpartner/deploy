@@ -13,7 +13,7 @@ class ServerFactoryTest extends PHPUnit_Framework_TestCase
         $this->container = new \RoundPartner\Test\Mocks\Container();
         $entity = new \RoundPartner\Deploy\Plan\Entity\Plan();
         $entity->full_name = 'symfony/yaml';
-        $this->container->getCloud()->addMessage('deploy_dev', $entity);
+        $this->container->getCloud()->queue('deploy_dev')->addMessage($entity);
     }
 
     public function testSingleRun()

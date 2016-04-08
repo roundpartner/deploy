@@ -6,7 +6,7 @@ use RoundPartner\Cloud\Service\Cloud;
 
 class CloudService extends Cloud
 {
-
+    
     /**
      * @var array
      */
@@ -27,7 +27,7 @@ class CloudService extends Cloud
         if (!array_key_exists($queue, $this->messages)) {
             $this->messages[$queue] = array();
         }
-        $this->messages[$queue][] = $message;
+        $this->messages[$queue][] = new Message($message);
         return true;
     }
 

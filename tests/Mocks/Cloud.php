@@ -13,6 +13,11 @@ class Cloud implements CloudInterface
     protected $client;
 
     /**
+     * @var Queue[]
+     */
+    protected $queues;
+
+    /**
      * Cloud constructor.
      *
      * @param \RoundPartner\Cloud\Service\Cloud $client
@@ -21,27 +26,19 @@ class Cloud implements CloudInterface
     public function __construct(\RoundPartner\Cloud\Service\Cloud $client, $secret)
     {
         $this->client = $client;
+        $this->queues = array();
     }
 
     /**
      * @param string $queue
-     * @param mixed $message
-     * @return bool
-     */
-    public function addMessage($queue, $message)
-    {
-        return $this->client->addMessage($queue, $message);
-    }
-
-    /**
-     * @param string $queue
-     * @param integer $limit
      *
-     * @return mixed[]
-     * @throws \Exception
+     * @return Queue
      */
-    public function getMessages($queue, $limit = 10)
+    public function queue($queue)
     {
-        return $this->client->getMessages($queue, $limit);
+        if (!isset($this->queues[$queue])) {
+            $this->queues[$queue] = new Queue($this->client, $queue);
+        }
+        return $this->queues[$queue];
     }
 }
