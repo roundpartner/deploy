@@ -2,6 +2,9 @@
 
 namespace RoundPartner\Deploy\Server;
 
+use RoundPartner\Cloud\Message;
+use RoundPartner\Cloud\Queue\Poll;
+use RoundPartner\Cloud\Queue\PollFactory;
 use RoundPartner\Deploy\Container;
 use RoundPartner\Deploy\Plan\PlanFactory;
 
@@ -51,29 +54,39 @@ class Server
         }
 
         $cloudConfig = $this->container->getConfig()->get('cloud');
-        $messages = $this->container->getCloud()
-            ->queue($cloudConfig['name'])
-            ->getMessages();
-        $plans = array();
-        foreach ($messages as $message) {
-            $plans[] = $message->getBody();
-            $message->delete();
-        }
+        $queue = $this->container->getCloud()
+            ->queue($cloudConfig['name']);
+        $poll = PollFactory::create($queue, $this->sleep);
         
-        $this->runPlans($plans);
+        $message = $poll->next();
+        if ($message) {
+            $this->processMessage($message);
+        }
 
         ++$this->currentIteration;
         return true;
     }
 
     /**
-     * @param \RoundPartner\Deploy\Plan\Entity\Plan[] $planEntities
+     * @param Message $message
+     *
+     * @throws \Exception
      */
-    protected function runPlans($planEntities)
+    protected function processMessage(Message $message)
     {
-        foreach ($planEntities as $planEntity) {
-            $plan = PlanFactory::createWithEntity($this->container, $planEntity);
-            $plan->deploy();
-        }
+        $plan = $message->getBody();
+        $this->runPlan($plan);
+        $message->delete();
+    }
+
+    /**
+     * @param \RoundPartner\Deploy\Plan\Entity\Plan $planEntity
+     *
+     * @return bool
+     */
+    protected function runPlan($planEntity)
+    {
+        $plan = PlanFactory::createWithEntity($this->container, $planEntity);
+        return $plan->deploy();
     }
 }

@@ -26,11 +26,11 @@ class ServerTest extends PHPUnit_Framework_TestCase
     {
         $server = $this->getMockBuilder('\RoundPartner\Deploy\Server\Server')
             ->setConstructorArgs(array($this->container, \RoundPartner\Deploy\Server\Server::RUN_ONCE))
-            ->setMethods(array('runPlans'))
+            ->setMethods(array('runPlan'))
             ->getMock();
         $server->expects($this->once())
-            ->method('runPlans')
-        ->with($this->countOf(1));
+            ->method('runPlan')
+        ->with($this->isInstanceOf('\RoundPartner\Deploy\Plan\Entity\Plan'));
         $server->dispatch();
     }
 }
