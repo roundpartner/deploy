@@ -24,7 +24,7 @@
   ],
   "autoload": {
     "psr-4": {
-      "RoundPartner\\": "src/"
+      "RoundPartner\\Deploy\\": "src/Deploy/"
     }
   },
   "autoload-dev": {
