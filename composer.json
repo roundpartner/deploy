@@ -30,9 +30,6 @@
   "autoload-dev": {
     "psr-4": {
       "RoundPartner\\Test\\": "tests/"
-    },
-    "psr-0": {
-      "Providers": "tests/"
     }
   },
   "require": {

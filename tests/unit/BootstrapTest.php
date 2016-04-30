@@ -19,7 +19,7 @@ class BootstrapTest extends PHPUnit_Framework_TestCase
      * @param string $body
      * @param string $secret
      *
-     * @dataProvider \Providers\RequestProvider::requestProvider()
+     * @dataProvider \RoundPartner\Test\Providers\RequestProvider::requestProvider()
      */
     public function testBootstrap($headers, $body, $secret)
     {

@@ -7,7 +7,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
      * @param array[] $headers
      * @param string $body
      *
-     * @dataProvider \Providers\RequestProvider::requestProvider()
+     * @dataProvider \RoundPartner\Test\Providers\RequestProvider::requestProvider()
      */
     public function testGetHeaders($headers, $body)
     {
@@ -19,7 +19,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
      * @param array[] $headers
      * @param string $body
      *
-     * @dataProvider \Providers\RequestProvider::requestProvider()
+     * @dataProvider \RoundPartner\Test\Providers\RequestProvider::requestProvider()
      */
     public function testGetRawBody($headers, $body)
     {
@@ -31,7 +31,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
      * @param array[] $headers
      * @param string $body
      *
-     * @dataProvider \Providers\RequestProvider::requestProvider()
+     * @dataProvider \RoundPartner\Test\Providers\RequestProvider::requestProvider()
      */
     public function testGetHeaderThatDoesNotExist($headers, $body)
     {
@@ -43,7 +43,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
      * @param array[] $headers
      * @param string $body
      *
-     * @dataProvider \Providers\RequestProvider::requestProvider()
+     * @dataProvider \RoundPartner\Test\Providers\RequestProvider::requestProvider()
      */
     public function testGetBody($headers, $body)
     {
@@ -55,7 +55,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
      * @param array[] $headers
      * @param string $body
      *
-     * @dataProvider \Providers\RequestProvider::requestProvider()
+     * @dataProvider \RoundPartner\Test\Providers\RequestProvider::requestProvider()
      */
     public function testGetBodyHasCommits($headers, $body)
     {
@@ -69,7 +69,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
      * @param string $body
      * @param string $secret
      *
-     * @dataProvider \Providers\RequestProvider::requestProvider()
+     * @dataProvider \RoundPartner\Test\Providers\RequestProvider::requestProvider()
      */
     public function testVerify($headers, $body, $secret)
     {

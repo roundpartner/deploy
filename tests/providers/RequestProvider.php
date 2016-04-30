@@ -1,6 +1,6 @@
 <?php
 
-namespace Providers;
+namespace RoundPartner\Test\Providers;
 
 use RoundPartner\Deploy\Entity\Commit;
 use RoundPartner\Deploy\Entity\Repository;

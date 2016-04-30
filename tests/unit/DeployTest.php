@@ -17,7 +17,7 @@ class DeployTest extends PHPUnit_Framework_TestCase
      * @param string $body
      * @param string $secret
      *
-     * @dataProvider \Providers\RequestProvider::requestProvider()
+     * @dataProvider \RoundPartner\Test\Providers\RequestProvider::requestProvider()
      */
     public function testDispatch($headers, $body, $secret)
     {
@@ -31,7 +31,7 @@ class DeployTest extends PHPUnit_Framework_TestCase
      * @param string $body
      * @param string $secret
      *
-     * @dataProvider \Providers\RequestProvider::requestProviderNoPlan()
+     * @dataProvider \RoundPartner\Test\Providers\RequestProvider::requestProviderNoPlan()
      */
     public function testDispatchPlanDoesNotExist($headers, $body, $secret)
     {

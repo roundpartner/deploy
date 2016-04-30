@@ -4,7 +4,7 @@ class HubSignatureTest extends PHPUnit_Framework_TestCase
 {
 
     /**
-     * @dataProvider \Providers\RequestProvider::requestProvider()
+     * @dataProvider \RoundPartner\Test\Providers\RequestProvider::requestProvider()
      */
     public function testVerify($headers, $body, $secret)
     {
