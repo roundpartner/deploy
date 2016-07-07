@@ -57,7 +57,7 @@ class Server
         $queue = $this->container->getCloud()
             ->queue($cloudConfig['name']);
         $poll = PollFactory::create($queue, $this->sleep);
-        
+
         $message = $poll->next();
         if ($message) {
             $this->processMessage($message);

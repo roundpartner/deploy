@@ -8,4 +8,4 @@ services:
       - [pushHandler, ['@applog']]
   applog:
     class: Monolog\Handler\StreamHandler
-    arguments: ['/tmp/deploy.log', 'INFO']
+    arguments: ['/var/log/deploy.log', 'INFO']
