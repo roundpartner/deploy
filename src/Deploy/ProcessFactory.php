@@ -11,6 +11,7 @@ class ProcessFactory
     const GIT_CLONE = 'clone';
     const GIT_CHECKOUT = 'checkout';
     const GIT_PULL = 'pull';
+    const GIT_REBASE = '--rebase';
 
     /**
      * @param string $repository
@@ -53,7 +54,7 @@ class ProcessFactory
         $builder = self::createBuilder($workingDirectory);
         return $builder
             ->setPrefix(self::GIT_PREFIX)
-            ->setArguments([self::GIT_PULL])
+            ->setArguments([self::GIT_PULL, self::GIT_REBASE])
             ->getProcess();
     }
 

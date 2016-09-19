@@ -17,7 +17,7 @@ class ProcessFactoryTest extends \PHPUnit_Framework_TestCase
         $process = ProcessFactory::createGitClone('address', 'directory', '/tmp');
         $this->assertEquals("'git' 'clone' 'address' 'directory'", $process->getCommandLine());
     }
-    
+
     public function testCreateGitCheckoutMaster()
     {
         $process = ProcessFactory::createGitCheckout('master', '/tmp');
@@ -29,10 +29,10 @@ class ProcessFactoryTest extends \PHPUnit_Framework_TestCase
         $process = ProcessFactory::createGitCheckout('develop', '/tmp');
         $this->assertEquals("'git' 'checkout' 'develop'", $process->getCommandLine());
     }
-    
+
     public function testCreateGitPull()
     {
         $process = ProcessFactory::createGitPull('/tmp');
-        $this->assertEquals("'git' 'pull'", $process->getCommandLine());
+        $this->assertEquals("'git' 'pull' '--rebase'", $process->getCommandLine());
     }
 }
