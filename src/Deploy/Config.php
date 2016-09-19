@@ -19,7 +19,6 @@ class Config
     public function __construct($configFile = 'config.ini')
     {
         $this->configFile = $configFile;
-
     }
 
     public function get($key)

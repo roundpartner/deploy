@@ -2,9 +2,9 @@
 
 namespace RoundPartner\Test\Mocks;
 
-class Message extends \RoundPartner\Cloud\Message
+class Message extends \RoundPartner\Cloud\Message\Message
 {
-    
+
     function __construct($message)
     {
         parent::__construct($message, false);

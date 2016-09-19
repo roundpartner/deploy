@@ -2,8 +2,7 @@
 
 namespace RoundPartner\Deploy\Server;
 
-use RoundPartner\Cloud\Message;
-use RoundPartner\Cloud\Queue\Poll;
+use RoundPartner\Cloud\Message\Message;
 use RoundPartner\Cloud\Queue\PollFactory;
 use RoundPartner\Deploy\Container;
 use RoundPartner\Deploy\Plan\PlanFactory;

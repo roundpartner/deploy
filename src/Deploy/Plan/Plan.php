@@ -37,7 +37,6 @@ class Plan
         $entity->command = $config['cmd'];
 
         $this->entity = $entity;
-
     }
 
     /**
@@ -110,6 +109,5 @@ class Plan
         $chain = new ChainedProcess($this->container);
         $chain->addProcess($process);
         return $chain->mustRun();
-
     }
 }
