@@ -20,6 +20,10 @@
     {
       "type": "git",
       "url": "https://github.com/roundpartner/verify-hash"
+    },
+    {
+      "type": "git",
+      "url": "https://github.com/roundpartner/ifttt-service"
     }
   ],
   "autoload": {
@@ -40,7 +44,8 @@
     "symfony/yaml": "^3.0",
     "symfony/config": "^3.0",
     "symfony/process": "^3.0",
-    "monolog/monolog": "^1.18"
+    "monolog/monolog": "^1.18",
+    "roundpartner/ifttt-service": "dev-master"
   },
   "require-dev": {
     "squizlabs/php_codesniffer": "2.*",

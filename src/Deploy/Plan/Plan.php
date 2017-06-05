@@ -2,6 +2,7 @@
 
 namespace RoundPartner\Deploy\Plan;
 
+use RoundPartner\Conf\Service;
 use RoundPartner\Deploy\ChainedProcess;
 use RoundPartner\Deploy\Container;
 use RoundPartner\Deploy\Exception\NoPlanException;
@@ -84,6 +85,8 @@ class Plan
             return false;
         }
 
+        $this->triggerPostDeployment();
+
         return true;
     }
 
@@ -109,5 +112,12 @@ class Plan
         $chain = new ChainedProcess($this->container);
         $chain->addProcess($process);
         return $chain->mustRun();
+    }
+
+    private function triggerPostDeployment()
+    {
+        $makerConfig = Service::get('ifttt');
+        $maker = new \RoundPartner\Maker\Maker($makerConfig['key']);
+        $maker->triggerAsync('rp_deploy', $this->entity->full_name);
     }
 }

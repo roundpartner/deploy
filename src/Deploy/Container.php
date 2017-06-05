@@ -2,8 +2,6 @@
 
 namespace RoundPartner\Deploy;
 
-use Monolog\Handler\StreamHandler;
-use Monolog\Logger;
 use RoundPartner\Cloud\Cloud;
 use RoundPartner\Cloud\CloudFactory;
 use RoundPartner\Conf\Service;
