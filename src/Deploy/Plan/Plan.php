@@ -59,6 +59,8 @@ class Plan
     public function deploy()
     {
 
+        $this->triggerPreDeployment();
+
         // @todo clean up all this code
         if (!file_exists($this->entity->location)) {
             if (!mkdir($this->entity->location, 0755, true)) {
@@ -114,10 +116,17 @@ class Plan
         return $chain->mustRun();
     }
 
+    private function triggerPreDeployment()
+    {
+        $makerConfig = Service::get('ifttt');
+        $maker = new \RoundPartner\Maker\Maker($makerConfig['key']);
+        $maker->triggerAsync('rp_deploy', $this->entity->full_name, 'Deploying');
+    }
+
     private function triggerPostDeployment()
     {
         $makerConfig = Service::get('ifttt');
         $maker = new \RoundPartner\Maker\Maker($makerConfig['key']);
-        $maker->triggerAsync('rp_deploy', $this->entity->full_name);
+        $maker->triggerAsync('rp_deploy', $this->entity->full_name, 'Deployed');
     }
 }
