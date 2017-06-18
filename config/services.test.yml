@@ -1,3 +1,4 @@
+---
 services:
   config:
     class: \RoundPartner\Deploy\Config
@@ -10,3 +11,6 @@ services:
   applog:
     class: Monolog\Handler\StreamHandler
     arguments: ['/tmp/deploy.log', 'INFO']
+  maker:
+    class: RoundPartner\Maker\Maker
+...

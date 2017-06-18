@@ -39,8 +39,9 @@ class Container
         $cloud = CloudFactory::create($auth['username'], $auth['key'], $auth['secret']);
         $this->container->set('opencloud', $cloud);
 
+        $makerClass = $this->container->getDefinition('maker')->getClass();
         $makerConfig = Service::get('ifttt');
-        $maker = new Maker($makerConfig['key']);
+        $maker = new $makerClass($makerConfig['key']);
         $this->container->set('maker', $maker);
     }
 
