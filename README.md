@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/roundpartner/deploy.svg?branch=master)](https://travis-ci.org/roundpartner/deploy)
 # Deploy
 This allows deploying git repos on push
 
