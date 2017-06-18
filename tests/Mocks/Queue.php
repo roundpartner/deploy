@@ -3,6 +3,7 @@
 namespace RoundPartner\Test\Mocks;
 
 use RoundPartner\Cloud\QueueInterface;
+use OpenCloud\Queues\Resource\Claim;
 
 class Queue implements QueueInterface
 {
@@ -41,13 +42,15 @@ class Queue implements QueueInterface
     }
 
     /**
-     * @param integer $limit
+     * @param int $limit
+     * @param int $grace
+     * @param int ttl
      *
      * @return mixed[]
      *
      * @throws \Exception
      */
-    public function getMessages($limit = 10)
+    public function getMessages($limit = Claim::LIMIT_DEFAULT, $grace = CLAIM::GRACE_DEFAULT, $ttl = CLAIM::TTL_DEFAULT)
     {
         return $this->service->getMessages($this->name, $limit);
     }
