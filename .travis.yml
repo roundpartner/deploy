@@ -15,5 +15,6 @@ install:
   - vendor/roundpartner/configuration/bin/set_configs_permission.sh
 
 script:
+  - phpunit
   - vendor/bin/phpunit
 ...
