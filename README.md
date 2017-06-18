@@ -3,7 +3,6 @@ This allows deploying git repos on push
 
 ## Testing
 ```bash
-cd tests
 phpunit
 ```
 
