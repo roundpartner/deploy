@@ -2,12 +2,12 @@
 
 namespace RoundPartner\Deploy\Plan;
 
-use RoundPartner\Conf\Service;
 use RoundPartner\Deploy\ChainedProcess;
 use RoundPartner\Deploy\Container;
 use RoundPartner\Deploy\Exception\NoPlanException;
 use RoundPartner\Deploy\ProcessFactory;
 use Symfony\Component\Process\Process;
+use RoundPartner\Maker\Maker;
 
 class Plan
 {
@@ -22,7 +22,19 @@ class Plan
      */
     protected $container;
 
-    public function __construct(Container $container, $repositoryName)
+    /**
+     * @var Maker
+     */
+    protected $maker;
+
+    /**
+     * @param Container $container
+     * @param string $repositoryName
+     * @param Maker $maker
+     *
+     * @throws NoPlanException
+     */
+    public function __construct(Container $container, $repositoryName, $maker = null)
     {
         $this->container = $container;
         $entity = new Entity\Plan();
@@ -38,6 +50,8 @@ class Plan
         $entity->command = $config['cmd'];
 
         $this->entity = $entity;
+
+        $this->maker = $maker;
     }
 
     /**
@@ -118,15 +132,15 @@ class Plan
 
     private function triggerPreDeployment()
     {
-        $makerConfig = Service::get('ifttt');
-        $maker = new \RoundPartner\Maker\Maker($makerConfig['key']);
-        $maker->triggerAsync('rp_deploy', $this->entity->full_name, 'Deploying');
+        if (null !== $this->maker) {
+            $this->maker->triggerAsync('rp_deploy', $this->entity->full_name, 'Deploying');
+        }
     }
 
     private function triggerPostDeployment()
     {
-        $makerConfig = Service::get('ifttt');
-        $maker = new \RoundPartner\Maker\Maker($makerConfig['key']);
-        $maker->triggerAsync('rp_deploy', $this->entity->full_name, 'Deployed');
+        if (null !== $this->maker) {
+            $this->maker->triggerAsync('rp_deploy', $this->entity->full_name, 'Deployed');
+        }
     }
 }
