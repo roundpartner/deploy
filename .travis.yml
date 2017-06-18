@@ -11,7 +11,7 @@ before_script:
   - phpenv config-rm xdebug.ini
 
 install:
-  - composer install
+  - composer install --no-interaction
   - vendor/roundpartner/configuration/bin/set_configs_permission.sh
 
 script:
