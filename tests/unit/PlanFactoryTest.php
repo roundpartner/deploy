@@ -1,6 +1,8 @@
 <?php
 
-class PlanFactoryTest extends PHPUnit_Framework_TestCase
+namespace RoundPartner\Test\Unit;
+
+class PlanFactoryTest extends \PHPUnit_Framework_TestCase
 {
 
     const FULL_NAME = 'symfony/yaml';

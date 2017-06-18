@@ -1,6 +1,8 @@
 <?php
 
-class ServerFactoryTest extends PHPUnit_Framework_TestCase
+namespace RoundPartner\Test\Unit;
+
+class ServerFactoryTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
