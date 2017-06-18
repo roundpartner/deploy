@@ -2,6 +2,9 @@
 
 namespace RoundPartner\Test\Unit;
 
+use RoundPartner\Deploy\Bootstrap;
+use RoundPartner\Test\Providers\RequestProvider;
+
 class BootstrapTest extends \PHPUnit_Framework_TestCase
 {
 
@@ -25,7 +28,7 @@ class BootstrapTest extends \PHPUnit_Framework_TestCase
      */
     public function testBootstrap($headers, $body, $secret)
     {
-        $bootstrap = new \RoundPartner\Deploy\Bootstrap($headers, $body, $secret, $this->container);
+        $bootstrap = new Bootstrap($headers, $body, $secret, $this->container);
         $this->assertTrue($bootstrap->dispatch());
     }
 }

@@ -12,6 +12,9 @@ class RequestProvider
 {
     const SECRET = 'myverysecuretestkey';
 
+    /**
+     * @return array
+     */
     public static function requestProvider()
     {
         $request = new Request();
@@ -36,6 +39,9 @@ class RequestProvider
         ));
     }
 
+    /**
+     * @return array
+     */
     public static function requestProviderNoPlan()
     {
         $request = new Request();
@@ -70,6 +76,11 @@ class RequestProvider
         return $commit;
     }
 
+    /**
+     * @param string $body
+     *
+     * @return string
+     */
     public static function getHash($body)
     {
         $verifyHash = new VerifyHash(self::SECRET);
