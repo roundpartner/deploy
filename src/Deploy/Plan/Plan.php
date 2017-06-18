@@ -34,7 +34,7 @@ class Plan
      *
      * @throws NoPlanException
      */
-    public function __construct(Container $container, $repositoryName, $maker = null)
+    public function __construct(Container $container, $repositoryName, $maker)
     {
         $this->container = $container;
         $entity = new Entity\Plan();
@@ -132,15 +132,11 @@ class Plan
 
     private function triggerPreDeployment()
     {
-        if (null !== $this->maker) {
-            $this->maker->triggerAsync('rp_deploy', $this->entity->full_name, 'Deploying');
-        }
+        $this->maker->triggerAsync('rp_deploy', $this->entity->full_name, 'Deploying');
     }
 
     private function triggerPostDeployment()
     {
-        if (null !== $this->maker) {
-            $this->maker->triggerAsync('rp_deploy', $this->entity->full_name, 'Deployed');
-        }
+        $this->maker->triggerAsync('rp_deploy', $this->entity->full_name, 'Deployed');
     }
 }

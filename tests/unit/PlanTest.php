@@ -16,7 +16,7 @@ class PlanTest extends PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->container = new \RoundPartner\Test\Mocks\Container();
-        $this->plan = new \RoundPartner\Deploy\Plan\Plan($this->container, 'symfony/yaml');
+        $this->plan = new \RoundPartner\Deploy\Plan\Plan($this->container, 'symfony/yaml', new \RoundPartner\Test\Mocks\Maker('maker'));
     }
 
     public function testGetEntity()
@@ -44,6 +44,6 @@ class PlanTest extends PHPUnit_Framework_TestCase
     public function testPlanDoesNotExist()
     {
         $this->setExpectedException('\Exception', 'No configuration found');
-        new \RoundPartner\Deploy\Plan\Plan($this->container, 'wont/exist');
+        new \RoundPartner\Deploy\Plan\Plan($this->container, 'wont/exist', new \RoundPartner\Test\Mocks\Maker('maker'));
     }
 }
