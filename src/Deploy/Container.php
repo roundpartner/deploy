@@ -5,6 +5,7 @@ namespace RoundPartner\Deploy;
 use RoundPartner\Cloud\Cloud;
 use RoundPartner\Cloud\CloudFactory;
 use RoundPartner\Conf\Service;
+use RoundPartner\Maker\Maker;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
@@ -37,6 +38,10 @@ class Container
         $auth = Service::get('opencloud');
         $cloud = CloudFactory::create($auth['username'], $auth['key'], $auth['secret']);
         $this->container->set('opencloud', $cloud);
+
+        $makerConfig = Service::get('ifttt');
+        $maker = new Maker($makerConfig['key']);
+        $this->container->set('maker', $maker);
     }
 
     /**
@@ -62,5 +67,13 @@ class Container
     {
         date_default_timezone_set('Europe/London');
         return $this->container->get('logger');
+    }
+
+    /**
+     * @return Maker
+     */
+    public function getMaker()
+    {
+        return $this->container->get('maker');
     }
 }
