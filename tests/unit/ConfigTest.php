@@ -1,6 +1,8 @@
 <?php
 
-class ConfigTest extends PHPUnit_Framework_TestCase
+namespace RoundPartner\Test\Unit;
+
+class ConfigTest extends \PHPUnit_Framework_TestCase
 {
 
     public function testGetValue()

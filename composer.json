@@ -40,12 +40,12 @@
     "roundpartner/configuration": "dev-master",
     "roundpartner/cloud": "dev-master",
     "roundpartner/verify-hash": "dev-master",
+    "roundpartner/ifttt-service": "dev-master",
     "symfony/dependency-injection": "^3.0",
     "symfony/yaml": "^3.0",
     "symfony/config": "^3.0",
     "symfony/process": "^3.0",
-    "monolog/monolog": "^1.18",
-    "roundpartner/ifttt-service": "dev-master"
+    "monolog/monolog": "^1.18"
   },
   "require-dev": {
     "squizlabs/php_codesniffer": "2.*",

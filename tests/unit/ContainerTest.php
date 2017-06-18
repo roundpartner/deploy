@@ -1,6 +1,8 @@
 <?php
 
-class ContainerTest extends PHPUnit_Framework_TestCase
+namespace RoundPartner\Test\Unit;
+
+class ContainerTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
