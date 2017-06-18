@@ -12,5 +12,5 @@ services:
     class: Monolog\Handler\StreamHandler
     arguments: ['/tmp/deploy.log', 'INFO']
   maker:
-    class: RoundPartner\Maker\Maker
+    class: RoundPartner\Test\Mocks\Maker
 ...

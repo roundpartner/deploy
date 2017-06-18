@@ -29,12 +29,4 @@ class Container extends \RoundPartner\Deploy\Container
         }
         return $this->cloud;
     }
-
-    /**
-     * @return null
-     */
-    public function getMaker()
-    {
-        return null;
-    }
 }
