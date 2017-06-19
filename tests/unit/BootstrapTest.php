@@ -3,6 +3,7 @@
 namespace RoundPartner\Test\Unit;
 
 use RoundPartner\Deploy\Bootstrap;
+use RoundPartner\Test\Providers\RequestProvider;
 
 class BootstrapTest extends \PHPUnit_Framework_TestCase
 {
@@ -15,7 +16,6 @@ class BootstrapTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        require_once dirname(__DIR__) . '/Providers/RequestProvider.php';
         $this->container = new \RoundPartner\Test\Mocks\Container();
     }
 
@@ -34,6 +34,6 @@ class BootstrapTest extends \PHPUnit_Framework_TestCase
 
     public function requestProvider()
     {
-        return \RoundPartner\Test\Providers\RequestProvider::requestProvider();
+        return RequestProvider::requestProvider();
     }
 }
