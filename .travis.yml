@@ -12,6 +12,7 @@ before_script:
 
 install:
   - composer install --no-interaction
+  - composer dump-autoload
   - vendor/roundpartner/configuration/bin/set_configs_permission.sh
 
 script:
