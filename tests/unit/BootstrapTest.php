@@ -3,7 +3,6 @@
 namespace RoundPartner\Test\Unit;
 
 use RoundPartner\Deploy\Bootstrap;
-use RoundPartner\Test\Providers\RequestProvider;
 
 class BootstrapTest extends \PHPUnit_Framework_TestCase
 {
