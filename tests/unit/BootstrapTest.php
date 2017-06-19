@@ -3,7 +3,6 @@
 namespace RoundPartner\Test\Unit;
 
 use RoundPartner\Deploy\Bootstrap;
-use RoundPartner\Test\Providers\RequestProvider;
 
 class BootstrapTest extends \PHPUnit_Framework_TestCase
 {
@@ -24,11 +23,16 @@ class BootstrapTest extends \PHPUnit_Framework_TestCase
      * @param string $body
      * @param string $secret
      *
-     * @dataProvider \RoundPartner\Test\Providers\RequestProvider::requestProvider()
+     * @dataProvider requestProvider
      */
     public function testBootstrap($headers, $body, $secret)
     {
         $bootstrap = new Bootstrap($headers, $body, $secret, $this->container);
         $this->assertTrue($bootstrap->dispatch());
+    }
+
+    public function requestProvider()
+    {
+        return \RoundPartner\Test\Providers\RequestProvider::requestProvider();
     }
 }
