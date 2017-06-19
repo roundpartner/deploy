@@ -15,6 +15,7 @@ class BootstrapTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
+        require_once dirname(__DIR__) . '/Providers/RequestProvider.php';
         $this->container = new \RoundPartner\Test\Mocks\Container();
     }
 
