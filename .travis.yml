@@ -14,7 +14,6 @@ install:
   - composer install --no-interaction --no-progress --no-autoloader
   - composer dumpautoload --no-interaction --optimize
   - vendor/roundpartner/configuration/bin/set_configs_permission.sh
-  - cat vendor/composer/autoload_classmap.php
 
 script:
   - vendor/bin/phpunit
