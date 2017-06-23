@@ -13,6 +13,7 @@ before_script:
 install:
   - composer install --no-interaction --no-progress
   - vendor/roundpartner/configuration/bin/set_configs_permission.sh
+  - cat vendor/composer/autoload_psr4.php
 
 script:
   - vendor/bin/phpunit

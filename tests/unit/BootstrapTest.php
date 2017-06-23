@@ -4,6 +4,7 @@ namespace RoundPartner\Test\Unit;
 
 use RoundPartner\Deploy\Bootstrap;
 use RoundPartner\Test\Providers\RequestProvider;
+use RoundPartner\Test\Mocks\Container;
 
 class BootstrapTest extends \PHPUnit_Framework_TestCase
 {
@@ -16,7 +17,7 @@ class BootstrapTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->container = new \RoundPartner\Test\Mocks\Container();
+        $this->container = new Container();
     }
 
     /**
