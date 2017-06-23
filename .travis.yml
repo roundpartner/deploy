@@ -11,9 +11,10 @@ before_script:
   - phpenv config-rm xdebug.ini
 
 install:
-  - composer install --no-interaction --no-progress
+  - composer install --no-interaction --no-progress --no-autoloader
+  - composer dumpautoload --no-interaction --optimize
   - vendor/roundpartner/configuration/bin/set_configs_permission.sh
-  - cat vendor/composer/autoload_psr4.php
+  - cat vendor/composer/autoload_classmap.php
 
 script:
   - vendor/bin/phpunit
