@@ -87,16 +87,7 @@ class Plan
 
         $workingDirectory = $this->entity->location . '/' . $this->entity->directory;
 
-        if (!file_exists($workingDirectory . '/.git')) {
-            $result = $this->runProcess(ProcessFactory::createGitClone($this->entity->clone_address, $this->entity->directory, $this->entity->location));
-            if (!$result) {
-                return false;
-            }
-            $result = $this->runProcess(ProcessFactory::createGitCheckout('master', $workingDirectory));
-        } else {
-            $result = $this->runProcess(ProcessFactory::createGitPull($workingDirectory));
-        }
-        if (!$result) {
+        if (!$this->checkoutRepo($workingDirectory)) {
             return false;
         }
 
@@ -107,6 +98,24 @@ class Plan
         $this->triggerPostDeployment();
 
         return true;
+    }
+
+    /**
+     * @return bool
+     */
+    public function checkoutRepo()
+    {
+        $workingDirectory = $this->entity->location . '/' . $this->entity->directory;
+        if (!file_exists($workingDirectory . '/.git')) {
+            $result = $this->runProcess(ProcessFactory::createGitClone($this->entity->clone_address, $this->entity->directory, $this->entity->location));
+            if (!$result) {
+                return false;
+            }
+            $result = $this->runProcess(ProcessFactory::createGitCheckout('master', $workingDirectory));
+        } else {
+            $result = $this->runProcess(ProcessFactory::createGitPull($workingDirectory));
+        }
+        return $result;
     }
 
     /**
