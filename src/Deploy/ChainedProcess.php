@@ -7,17 +7,20 @@ use Symfony\Component\Process\Exception\ProcessFailedException;
 
 class ChainedProcess
 {
-    
+
     /**
      * @var Container
      */
     protected $container;
-    
+
     /**
      * @var Process[]
      */
     protected $chain;
 
+    /**
+     * @param Container $container
+     */
     public function __construct(Container $container)
     {
         $this->container = $container;
@@ -26,6 +29,7 @@ class ChainedProcess
 
     /**
      * @return bool
+     *
      * @throws \Exception
      */
     public function mustRun()
@@ -42,6 +46,7 @@ class ChainedProcess
      * @param Process $process
      *
      * @return bool
+     *
      * @throws \Exception
      */
     private function mustRunProcess(Process $process)
@@ -81,6 +86,7 @@ class ChainedProcess
 
     /**
      * @param Process $process
+     *
      * @return ChainedProcess
      */
     public function addProcess(Process $process)

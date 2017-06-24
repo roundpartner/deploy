@@ -2,10 +2,10 @@
 
 namespace RoundPartner\Deploy\Plan;
 
-use RoundPartner\Deploy\ChainedProcess;
 use RoundPartner\Deploy\Container;
 use RoundPartner\Deploy\Exception\NoPlanException;
 use RoundPartner\Deploy\ProcessFactory;
+use RoundPartner\Deploy\Runner;
 use Symfony\Component\Process\Process;
 use RoundPartner\Maker\Maker;
 
@@ -26,6 +26,11 @@ class Plan
      * @var Maker
      */
     protected $maker;
+
+    /**
+     * @var Runner
+     */
+    protected $runner;
 
     /**
      * @param Container $container
@@ -52,6 +57,8 @@ class Plan
         $this->entity = $entity;
 
         $this->maker = $maker;
+
+        $this->runner = new Runner($container);
     }
 
     /**
@@ -110,12 +117,11 @@ class Plan
      * @param string $command
      * @param string $workingDirectory
      *
-     * @return string
+     * @return bool
      */
     private function process($command, $workingDirectory)
     {
-        $process = new Process($command, $workingDirectory);
-        return $this->runProcess($process);
+        return $this->runner->run($command, $workingDirectory);
     }
 
     /**
@@ -125,9 +131,7 @@ class Plan
      */
     private function runProcess(Process $process)
     {
-        $chain = new ChainedProcess($this->container);
-        $chain->addProcess($process);
-        return $chain->mustRun();
+        return $this->runner->runProcess($process);
     }
 
     private function triggerPreDeployment()
