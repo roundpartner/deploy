@@ -58,7 +58,7 @@ class Plan
 
         $this->maker = $maker;
 
-        $this->runner = new Runner($container);
+        $this->runner = $this->container->getRunner();
     }
 
     /**

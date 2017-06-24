@@ -21,7 +21,7 @@ class RunnerTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->container = new Container();
-        $this->process = new Runner($this->container);
+        $this->process = new Runner($this->container->getLogger());
     }
 
     public function testGetInstance()

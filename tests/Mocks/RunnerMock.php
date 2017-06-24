@@ -1,13 +1,12 @@
 <?php
 
-namespace RoundPartner\Deploy;
+namespace RoundPartner\Test\Mocks;
 
 use Monolog\Logger;
 use Symfony\Component\Process\Process;
 
-class Runner
+class RunnerMock
 {
-
     /**
      * @var Logger
      */
@@ -29,8 +28,10 @@ class Runner
      */
     public function run($command, $workingDirectory)
     {
-        $process = new Process($command, $workingDirectory);
-        return $this->runProcess($process);
+        if ('false' === $command) {
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -40,8 +41,6 @@ class Runner
      */
     public function runProcess(Process $process)
     {
-        $chain = new ChainedProcess($this->logger);
-        $chain->addProcess($process);
-        return $chain->mustRun();
+        return true;
     }
 }

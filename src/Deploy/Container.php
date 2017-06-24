@@ -77,4 +77,12 @@ class Container
     {
         return $this->container->get('maker');
     }
+
+    /**
+     * @return Runner
+     */
+    public function getRunner()
+    {
+        return $this->container->get('runner');
+    }
 }

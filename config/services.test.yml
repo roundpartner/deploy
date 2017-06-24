@@ -1,10 +1,10 @@
 ---
 services:
   config:
-    class: \RoundPartner\Deploy\Config
+    class: RoundPartner\Deploy\Config
     arguments: ['config.example.ini']
   logger:
-      class: \Monolog\Logger
+      class: Monolog\Logger
       arguments: ['file']
       calls:
         - [pushHandler, ['@applog']]
@@ -13,4 +13,7 @@ services:
     arguments: ['/tmp/deploy.log', 'INFO']
   maker:
     class: RoundPartner\Test\Mocks\Maker
+  runner:
+    class: RoundPartner\Test\Mocks\RunnerMock
+    arguments: ['@logger']
 ...

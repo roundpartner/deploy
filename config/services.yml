@@ -1,9 +1,9 @@
 ---
 services:
   config:
-    class: \RoundPartner\Deploy\Config
+    class: RoundPartner\Deploy\Config
   logger:
-    class: \Monolog\Logger
+    class: Monolog\Logger
     arguments: ['file']
     calls:
       - [pushHandler, ['@applog']]
@@ -12,4 +12,7 @@ services:
     arguments: ['/var/log/deploy.log', 'INFO']
   maker:
     class: RoundPartner\Maker\Maker
+  runner:
+    class: RoundPartner\Deploy\Runner
+    arguments: ['@logger']
 ...

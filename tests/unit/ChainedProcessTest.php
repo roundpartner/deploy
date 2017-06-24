@@ -13,10 +13,11 @@ class ChainedProcessTest extends \PHPUnit_Framework_TestCase
      * @var ChainedProcess
      */
     protected $chainedProcess;
-    
+
     public function setUp()
     {
-        $this->chainedProcess = new ChainedProcess(new Container());
+        $container = new Container();
+        $this->chainedProcess = new ChainedProcess($container->getLogger());
         $this->chainedProcess->addProcess(new Process('true', '/tmp'));
     }
 

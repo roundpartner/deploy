@@ -2,6 +2,7 @@
 
 namespace RoundPartner\Deploy;
 
+use Monolog\Logger;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 
@@ -9,9 +10,9 @@ class ChainedProcess
 {
 
     /**
-     * @var Container
+     * @var Logger
      */
-    protected $container;
+    protected $logger;
 
     /**
      * @var Process[]
@@ -19,11 +20,11 @@ class ChainedProcess
     protected $chain;
 
     /**
-     * @param Container $container
+     * @param Logger $logger
      */
-    public function __construct(Container $container)
+    public function __construct(Logger $logger)
     {
-        $this->container = $container;
+        $this->logger = $logger;
         $this->chain = array();
     }
 
@@ -105,7 +106,7 @@ class ChainedProcess
             if (!trim($line)) {
                 continue;
             }
-            $this->container->getLogger()->addInfo($prefix . ': ' . $line);
+            $this->logger->addInfo($prefix . ': ' . $line);
         }
     }
 
@@ -116,7 +117,7 @@ class ChainedProcess
     private function logError($output, $prefix = 'Error')
     {
         foreach (explode("\n", $output) as $line) {
-            $this->container->getLogger()->addError($prefix . ': ' . $line);
+            $this->logger->addError($prefix . ': ' . $line);
         }
     }
 }
