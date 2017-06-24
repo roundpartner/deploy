@@ -79,14 +79,10 @@ class Plan
 
     public function deploy()
     {
-
         $this->triggerPreDeployment();
 
-        // @todo clean up all this code
-        if (!file_exists($this->entity->location)) {
-            if (!mkdir($this->entity->location, 0755, true)) {
-                return false;
-            }
+        if (!$this->createRepoFolder($this->entity->location)) {
+            return false;
         }
 
         $workingDirectory = $this->entity->location . '/' . $this->entity->directory;
@@ -111,6 +107,22 @@ class Plan
         $this->triggerPostDeployment();
 
         return true;
+    }
+
+    /**
+     * @param string $location
+     *
+     * @return bool
+     */
+    public function createRepoFolder($location)
+    {
+        if (file_exists($location)) {
+            return true;
+        }
+        if (mkdir($location, 0755, true)) {
+            return true;
+        }
+        return false;
     }
 
     /**
