@@ -87,10 +87,12 @@ class Plan
 
         $workingDirectory = $this->entity->location . '/' . $this->entity->directory;
 
+        $this->container->getLogger()->addInfo('Checking out repo');
         if (!$this->checkoutRepo($workingDirectory)) {
             return false;
         }
 
+        $this->container->getLogger()->addInfo('Processing repo');
         if (false === $this->process($this->entity->command, $workingDirectory)) {
             return false;
         }
@@ -157,11 +159,13 @@ class Plan
 
     private function triggerPreDeployment()
     {
+        $this->container->getLogger()->addInfo('Running Pre Deployment Tasks');
         $this->maker->triggerAsync('rp_deploy', $this->entity->full_name, 'Deploying');
     }
 
     private function triggerPostDeployment()
     {
+        $this->container->getLogger()->addInfo('Running Post Deployment Tasks');
         $this->maker->triggerAsync('rp_deploy', $this->entity->full_name, 'Deployed');
     }
 }
