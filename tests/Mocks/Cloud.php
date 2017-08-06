@@ -23,7 +23,7 @@ class Cloud implements CloudInterface
      * @param \RoundPartner\Cloud\Service\Cloud $client
      * @param string $secret
      */
-    public function __construct(\RoundPartner\Cloud\Service\Cloud $client, $secret)
+    public function __construct($client, $secret)
     {
         $this->client = $client;
         $this->queues = array();
