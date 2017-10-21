@@ -115,7 +115,10 @@ class Plan
             }
             $result = $this->runProcess(ProcessFactory::createGitCheckout('master', $workingDirectory));
         } else {
-            $result = $this->runProcess(ProcessFactory::createGitPull($workingDirectory));
+            $result = $this->runProcess(ProcessFactory::createGitCheckout('master', $workingDirectory));
+            if ($result) {
+                $result = $this->runProcess(ProcessFactory::createGitPull($workingDirectory));
+            }
         }
         return $result;
     }
