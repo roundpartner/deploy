@@ -162,13 +162,18 @@ class Plan
 
     private function triggerPreDeployment()
     {
+        $date = new \DateTime();
+        $dateStamp = $date->format('Y-m-d h:i:s');
+        $this->container->getLogger()->addInfo('Running Post Deployment Tasks');
         $this->container->getLogger()->addInfo('Running Pre Deployment Tasks');
-        $this->maker->triggerAsync('rp_deploy', $this->entity->full_name, 'Deploying');
+        $this->maker->triggerAsync('rp_deploy', $this->entity->full_name, 'Deploying at' . $dateStamp);
     }
 
     private function triggerPostDeployment()
     {
+        $date = new \DateTime();
+        $dateStamp = $date->format('Y-m-d h:i:s');
         $this->container->getLogger()->addInfo('Running Post Deployment Tasks');
-        $this->maker->triggerAsync('rp_deploy', $this->entity->full_name, 'Deployed');
+        $this->maker->triggerAsync('rp_deploy', $this->entity->full_name, 'Deployed at ' . $dateStamp);
     }
 }
