@@ -56,6 +56,9 @@ class Plan
         if (array_key_exists('branch', $config)) {
             $entity->branch = $config['branch'];
         }
+        if (array_key_exists('notify_email', $config)) {
+            $entity->notify_email = $config['notify_email'];
+        }
 
         $this->entity = $entity;
 
