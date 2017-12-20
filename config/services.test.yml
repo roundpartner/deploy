@@ -13,6 +13,9 @@ services:
     arguments: ['/tmp/deploy.log', 'INFO']
   maker:
     class: RoundPartner\Test\Mocks\Maker
+  pigeon:
+    class: RoundPartner\Test\Mocks\Pigeon
+    arguments: ['http://localhost:3411']
   runner:
     class: RoundPartner\Test\Mocks\RunnerMock
     arguments: ['@logger']

@@ -12,6 +12,9 @@ services:
     arguments: ['/var/log/deploy.log', 'INFO']
   maker:
     class: RoundPartner\Maker\Maker
+  pigeon:
+    class: RoundPartner\Pigeon\Pigeon
+    arguments: ['http://rumia:3411']
   runner:
     class: RoundPartner\Deploy\Runner
     arguments: ['@logger']

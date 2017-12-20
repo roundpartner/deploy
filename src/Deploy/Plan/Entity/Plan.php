@@ -9,4 +9,6 @@ class Plan
     public $directory;
     public $clone_address;
     public $command;
+    public $branch;
+    public $notify_email;
 }

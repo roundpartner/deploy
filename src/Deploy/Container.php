@@ -6,6 +6,7 @@ use RoundPartner\Cloud\Cloud;
 use RoundPartner\Cloud\CloudFactory;
 use RoundPartner\Conf\Service;
 use RoundPartner\Maker\Maker;
+use RoundPartner\Pigeon\PigeonInterface;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
@@ -47,6 +48,8 @@ class Container
 
     /**
      * @return Config
+     *
+     * @throws \Exception
      */
     public function getConfig()
     {
@@ -55,6 +58,8 @@ class Container
 
     /**
      * @return Cloud
+     *
+     * @throws \Exception
      */
     public function getCloud()
     {
@@ -63,6 +68,8 @@ class Container
 
     /**
      * @return \Monolog\Logger
+     *
+     * @throws \Exception
      */
     public function getLogger()
     {
@@ -72,6 +79,8 @@ class Container
 
     /**
      * @return Maker
+     *
+     * @throws \Exception
      */
     public function getMaker()
     {
@@ -79,7 +88,19 @@ class Container
     }
 
     /**
+     * @return PigeonInterface
+     *
+     * @throws \Exception
+     */
+    public function getPigeon()
+    {
+        return $this->container->get('pigeon');
+    }
+
+    /**
      * @return Runner
+     *
+     * @throws \Exception
      */
     public function getRunner()
     {

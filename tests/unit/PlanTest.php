@@ -42,6 +42,12 @@ class PlanTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($this->plan->deploy());
     }
 
+    public function testDeployWithEmail()
+    {
+        $this->plan->getPlan()->notify_email = 'test@mailinator.com';
+        $this->assertTrue($this->plan->deploy());
+    }
+
     public function testDeployWithNoCommand()
     {
         $this->plan->getPlan()->command = '';

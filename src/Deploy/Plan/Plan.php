@@ -53,6 +53,9 @@ class Plan
         $entity->location = $config['location'];
         $entity->directory = $config['directory'];
         $entity->command = $config['cmd'];
+        if (array_key_exists('branch', $config)) {
+            $entity->branch = $config['branch'];
+        }
 
         $this->entity = $entity;
 
@@ -175,5 +178,10 @@ class Plan
         $dateStamp = $date->format('Y-m-d h:i:s');
         $this->container->getLogger()->addInfo('Running Post Deployment Tasks');
         $this->maker->triggerAsync('rp_deploy', $this->entity->full_name, 'Deployed at ' . $dateStamp);
+        if ($this->entity->notify_email) {
+            $subject = 'Deployment completed: ' . $this->entity->full_name;
+            $text = 'Deployment of ' . $this->entity->full_name . ' was completed at ' . $dateStamp;
+            $this->container->getPigeon()->sendBasicEmail($this->entity->notify_email, $this->entity->notify_email, $subject, $text);
+        }
     }
 }

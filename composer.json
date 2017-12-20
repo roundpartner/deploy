@@ -24,6 +24,10 @@
     {
       "type": "git",
       "url": "https://github.com/roundpartner/ifttt-service"
+    },
+    {
+      "type": "git",
+      "url": "https://github.com/roundpartner/pigeon-php"
     }
   ],
   "autoload": {
@@ -41,6 +45,7 @@
     "roundpartner/cloud": "dev-master",
     "roundpartner/verify-hash": "dev-master",
     "roundpartner/ifttt-service": "dev-master",
+    "roundpartner/pigeon-php": "dev-master",
     "symfony/dependency-injection": "^3.0",
     "symfony/yaml": "^3.0",
     "symfony/config": "^3.0",
