@@ -44,7 +44,7 @@ class Runner
      */
     public function runProcess(Process $process)
     {
-        $this->container->getLogger()->addInfo('Running process: ' . $process->getCommandLine());
+        $this->logger->addInfo('Running process: ' . $process->getCommandLine());
         $chain = new ChainedProcess($this->logger);
         $chain->addProcess($process);
         return $chain->mustRun();
