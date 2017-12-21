@@ -26,6 +26,8 @@ class Runner
      * @param string $workingDirectory
      *
      * @return bool
+     *
+     * @throws \Exception
      */
     public function run($command, $workingDirectory)
     {
@@ -37,9 +39,12 @@ class Runner
      * @param Process $process
      *
      * @return bool
+     *
+     * @throws \Exception
      */
     public function runProcess(Process $process)
     {
+        $this->container->getLogger()->addInfo('Running process: ' . $process->getCommandLine());
         $chain = new ChainedProcess($this->logger);
         $chain->addProcess($process);
         return $chain->mustRun();

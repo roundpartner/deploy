@@ -160,6 +160,8 @@ class Plan
      * @param Process $process
      *
      * @return bool
+     *
+     * @throws /Exception
      */
     private function runProcess(Process $process)
     {
