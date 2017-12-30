@@ -115,7 +115,11 @@ class Plan
     {
         $workingDirectory = $this->entity->location . '/' . $this->entity->directory;
         if (!file_exists($workingDirectory . '/.git')) {
-            $result = $this->runProcess(ProcessFactory::createGitClone($this->entity->clone_address, $this->entity->directory, $this->entity->location));
+            $result = $this->runProcess(ProcessFactory::createGitClone(
+                $this->entity->clone_address,
+                $this->entity->directory,
+                $this->entity->location
+            ));
             if (!$result) {
                 return false;
             }
@@ -150,6 +154,8 @@ class Plan
      * @param string $workingDirectory
      *
      * @return bool
+     *
+     * @throws \Exception
      */
     private function process($command, $workingDirectory)
     {
@@ -182,7 +188,11 @@ class Plan
         $date = new \DateTime();
         $dateStamp = $date->format('Y-m-d h:i:s');
         $this->container->getLogger()->addInfo('Running Post Deployment Tasks');
-        $this->maker->triggerAsync('rp_deploy', $this->entity->full_name, 'Deployed at ' . $dateStamp);
+        $this->maker->triggerAsync(
+            'rp_deploy',
+            $this->entity->full_name,
+            'Deployed at ' . $dateStamp
+        );
         if ($this->entity->notify_email) {
             $subject = 'Deployment completed: ' . $this->entity->full_name;
             $text = 'Deployment of ' . $this->entity->full_name . ' was completed at ' . $dateStamp;
