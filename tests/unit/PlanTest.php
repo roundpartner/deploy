@@ -26,6 +26,12 @@ class PlanTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('\RoundPartner\Deploy\Plan\Entity\Plan', $this->plan->getPlan());
     }
 
+    public function testEntityHasEmail()
+    {
+        $plan = $this->plan->getPlan();
+        $this->assertNotNull($plan->notify_email);
+    }
+
     public function testCreateRepoFolder()
     {
         $this->assertTrue($this->plan->createRepoFolder('/tmp/test'));

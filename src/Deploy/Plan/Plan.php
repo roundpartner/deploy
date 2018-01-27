@@ -38,6 +38,7 @@ class Plan
      * @param Maker $maker
      *
      * @throws NoPlanException
+     * @throws \Exception
      */
     public function __construct(Container $container, $repositoryName, $maker)
     {
@@ -88,6 +89,7 @@ class Plan
         $this->triggerPreDeployment();
 
         if (!$this->createRepoFolder($this->entity->location)) {
+            $this->triggerPostDeployment('failed [repo creation]');
             return false;
         }
 
@@ -95,16 +97,17 @@ class Plan
 
         $this->container->getLogger()->addInfo('Checking out repo');
         if (!$this->checkoutRepo($workingDirectory)) {
+            $this->triggerPostDeployment('failed [checkout]');
             return false;
         }
 
         $this->container->getLogger()->addInfo('Processing repo');
         if (false === $this->process($this->entity->command, $workingDirectory)) {
+            $this->triggerPostDeployment('failed [processing]');
             return false;
         }
 
         $this->triggerPostDeployment();
-
         return true;
     }
 
@@ -176,26 +179,22 @@ class Plan
 
     private function triggerPreDeployment()
     {
-        $date = new \DateTime();
-        $dateStamp = $date->format('Y-m-d h:i:s');
-        $this->container->getLogger()->addInfo('Running Post Deployment Tasks');
         $this->container->getLogger()->addInfo('Running Pre Deployment Tasks');
-        $this->maker->triggerAsync('rp_deploy', $this->entity->full_name, 'Deploying at' . $dateStamp);
     }
 
-    private function triggerPostDeployment()
+    /**
+     * @param string $status
+     *
+     * @throws \Exception
+     */
+    private function triggerPostDeployment($status = 'successful')
     {
         $date = new \DateTime();
         $dateStamp = $date->format('Y-m-d h:i:s');
         $this->container->getLogger()->addInfo('Running Post Deployment Tasks');
-        $this->maker->triggerAsync(
-            'rp_deploy',
-            $this->entity->full_name,
-            'Deployed at ' . $dateStamp
-        );
         if ($this->entity->notify_email) {
-            $subject = 'Deployment completed: ' . $this->entity->full_name;
-            $text = 'Deployment of ' . $this->entity->full_name . ' was completed at ' . $dateStamp;
+            $subject = 'Deployment ' . $status . ': ' . $this->entity->full_name;
+            $text = 'Deployment of ' . $this->entity->full_name . ' was ' . $status . ' at ' . $dateStamp;
             $this->container->getPigeon()->sendBasicEmail($this->entity->notify_email, $this->entity->notify_email, $subject, $text);
         }
     }
