@@ -1,7 +1,7 @@
 <?php
 
 if ($_SERVER['REQUEST_URI'] === '/up') {
-    http_response_code(201);
+    http_response_code(204);
     exit();
 }
 
