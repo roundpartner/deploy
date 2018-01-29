@@ -1,5 +1,10 @@
 <?php
 
+if ($_SERVER['REQUEST_URI'] === '/up') {
+    http_response_code(201);
+    exit();
+}
+
 if (!isset($_SERVER['GIT_SECRET'])) {
     http_response_code(500);
     echo 'Unable to process request without key set up';
