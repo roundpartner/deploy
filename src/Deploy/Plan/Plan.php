@@ -193,6 +193,7 @@ class Plan
         $dateStamp = $date->format('Y-m-d h:i:s');
         $this->container->getLogger()->addInfo('Running Post Deployment Tasks');
         if ($this->entity->notify_email) {
+            $this->container->getLogger()->addInfo('Sending email to ' . $this->entity->notify_email . ' with status of ' . $status);
             $subject = 'Deployment ' . $status . ': ' . $this->entity->full_name;
             $text = 'Deployment of ' . $this->entity->full_name . ' was ' . $status . ' at ' . $dateStamp;
             $this->container->getPigeon()->sendBasicEmail($this->entity->notify_email, $this->entity->notify_email, $subject, $text);

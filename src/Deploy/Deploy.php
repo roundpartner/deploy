@@ -40,6 +40,8 @@ class Deploy
 
     /**
      * @return bool
+     *
+     * @throws \Exception
      */
     public function dispatch()
     {
@@ -64,6 +66,8 @@ class Deploy
 
     /**
      * @return Plan\Plan|bool
+     *
+     * @throws \Exception
      */
     protected function getPlan()
     {
