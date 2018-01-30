@@ -196,7 +196,10 @@ class Plan
             $this->container->getLogger()->addInfo('Sending email to ' . $this->entity->notify_email . ' with status of ' . $status);
             $subject = 'Deployment ' . $status . ': ' . $this->entity->full_name;
             $text = 'Deployment of ' . $this->entity->full_name . ' was ' . $status . ' at ' . $dateStamp;
-            $this->container->getPigeon()->sendBasicEmail($this->entity->notify_email, $this->entity->notify_email, $subject, $text);
+            $result = $this->container->getPigeon()->sendBasicEmail($this->entity->notify_email, $this->entity->notify_email, $subject, $text);
+            if (!$result) {
+                $this->container->getLogger()->addInfo('Sending notification email failed');
+            }
         }
     }
 }
