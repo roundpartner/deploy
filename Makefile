@@ -1,5 +1,3 @@
 all:
-	composer update --no-dev -vvv roundpartner/configuration
-	composer update --no-dev -vvv roundpartner/cloud
-	composer update --no-dev -vvv roundpartner/verify-hash
+	composer update --no-dev
 	composer dumpautoload --optimize
