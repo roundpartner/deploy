@@ -7,6 +7,7 @@ use RoundPartner\Cloud\CloudFactory;
 use RoundPartner\Conf\Service;
 use RoundPartner\Maker\Maker;
 use RoundPartner\Pigeon\PigeonInterface;
+use RoundPartner\Seq\Seq;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
@@ -105,5 +106,15 @@ class Container
     public function getRunner()
     {
         return $this->container->get('runner');
+    }
+
+    /**
+     * @return Seq
+     *
+     * @throws \Exception
+     */
+    public function getSeq()
+    {
+        return $this->container->get('seq');
     }
 }

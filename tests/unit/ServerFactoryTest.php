@@ -2,7 +2,10 @@
 
 namespace RoundPartner\Test\Unit;
 
-class ServerFactoryTest extends \PHPUnit_Framework_TestCase
+use GuzzleHttp\Psr7\Response;
+use RoundPartner\Test\TestCase;
+
+class ServerFactoryTest extends TestCase
 {
 
     /**
@@ -15,7 +18,6 @@ class ServerFactoryTest extends \PHPUnit_Framework_TestCase
         $this->container = new \RoundPartner\Test\Mocks\Container();
         $entity = new \RoundPartner\Deploy\Plan\Entity\Plan();
         $entity->full_name = 'symfony/yaml';
-        $this->container->getCloud()->queue('deploy_dev')->addMessage($entity);
     }
 
     public function testSingleRun()
@@ -24,14 +26,32 @@ class ServerFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('\RoundPartner\Deploy\Server\Server', $server);
     }
 
-    public function testDispatchSingleRun()
+    /**
+     * @param Response[] $responses
+     *
+     * @dataProvider \RoundPartner\Test\Providers\SeqProvider::get()
+     *
+     * @throws \Exception
+     */
+    public function testDispatchSingleRun($responses)
     {
+        $client = $this->getClientMock($responses);
+        $this->container->getSeq()->setClient($client);
         $server = $this->getSingleRunServer();
         $this->assertTrue($server->dispatch());
     }
 
-    public function testDispatchMultipleRun()
+    /**
+     * @param Response[] $responses
+     *
+     * @dataProvider \RoundPartner\Test\Providers\SeqProvider::get()
+     *
+     * @throws \Exception
+     */
+    public function testDispatchMultipleRun($responses)
     {
+        $client = $this->getClientMock($responses);
+        $this->container->getSeq()->setClient($client);
         $server = \RoundPartner\Deploy\Server\ServerFactory::multiRun($this->container, 3, 0);
         $this->assertTrue($server->dispatch());
     }

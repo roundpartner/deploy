@@ -16,6 +16,8 @@ services:
   pigeon:
     class: RoundPartner\Test\Mocks\Pigeon
     arguments: ['http://localhost:3411']
+  seq:
+    class: RoundPartner\Seq\Seq
   runner:
     class: RoundPartner\Test\Mocks\RunnerMock
     arguments: ['@logger']

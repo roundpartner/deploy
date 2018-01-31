@@ -2,7 +2,10 @@
 
 namespace RoundPartner\Test\Unit;
 
-class DeployTest extends \PHPUnit_Framework_TestCase
+use GuzzleHttp\Psr7\Response;
+use RoundPartner\Test\TestCase;
+
+class DeployTest extends TestCase
 {
 
     /**
@@ -14,15 +17,21 @@ class DeployTest extends \PHPUnit_Framework_TestCase
     {
         $this->container = new \RoundPartner\Test\Mocks\Container();
     }
+
     /**
      * @param string[] $headers
      * @param string $body
      * @param string $secret
+     * @param Response[] $responses
      *
      * @dataProvider \RoundPartner\Test\Providers\RequestProvider::requestProvider()
+     *
+     * @throws \Exception
      */
-    public function testDispatch($headers, $body, $secret)
+    public function testDispatch($headers, $body, $secret, $responses)
     {
+        $client = $this->getClientMock($responses);
+        $this->container->getSeq()->setClient($client);
         $request = new \RoundPartner\Deploy\Request($headers, $body);
         $deploy = new \RoundPartner\Deploy\Deploy($request, $secret, $this->container);
         $this->assertTrue($deploy->dispatch());
@@ -34,6 +43,8 @@ class DeployTest extends \PHPUnit_Framework_TestCase
      * @param string $secret
      *
      * @dataProvider \RoundPartner\Test\Providers\RequestProvider::requestProviderNoPlan()
+     *
+     * @throws \Exception
      */
     public function testDispatchPlanDoesNotExist($headers, $body, $secret)
     {

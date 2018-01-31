@@ -6,6 +6,7 @@ use RoundPartner\Deploy\Container;
 use RoundPartner\Deploy\Exception\NoPlanException;
 use RoundPartner\Deploy\ProcessFactory;
 use RoundPartner\Deploy\Runner;
+use RoundPartner\Seq\Seq;
 use Symfony\Component\Process\Process;
 use RoundPartner\Maker\Maker;
 
@@ -76,12 +77,15 @@ class Plan
         return $this->entity;
     }
 
+    /**
+     * @return bool
+     *
+     * @throws \Exception
+     */
     public function dispatch()
     {
-        $cloudConfig = $this->container->getConfig()->get('cloud');
-        return $this->container->getCloud()
-            ->queue($cloudConfig['name'])
-            ->addMessage($this->entity);
+        return $this->container->getSeq()
+            ->post($this->entity);
     }
 
     public function deploy()

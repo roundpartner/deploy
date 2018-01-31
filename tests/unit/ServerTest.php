@@ -2,7 +2,10 @@
 
 namespace RoundPartner\Test\Unit;
 
-class ServerTest extends \PHPUnit_Framework_TestCase
+use RoundPartner\Test\TestCase;
+use GuzzleHttp\Psr7\Response;
+
+class ServerTest extends TestCase
 {
 
     /**
@@ -24,8 +27,17 @@ class ServerTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('\RoundPartner\Deploy\Server\Server', $server);
     }
 
-    public function testRunsOnce()
+    /**
+     * @param Response[] $responses
+     *
+     * @dataProvider \RoundPartner\Test\Providers\SeqProvider::get()
+     *
+     * @throws \Exception
+     */
+    public function testRunsOnce($responses)
     {
+        $client = $this->getClientMock($responses);
+        $this->container->getSeq()->setClient($client);
         $server = $this->getMockBuilder('\RoundPartner\Deploy\Server\Server')
             ->setConstructorArgs(array($this->container, \RoundPartner\Deploy\Server\Server::RUN_ONCE))
             ->setMethods(array('runPlan'))

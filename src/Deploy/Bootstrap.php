@@ -29,6 +29,8 @@ class Bootstrap
 
     /**
      * @return bool
+     *
+     * @throws \Exception
      */
     public function dispatch()
     {

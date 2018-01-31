@@ -7,6 +7,7 @@ use RoundPartner\Deploy\Entity\Repository;
 use RoundPartner\Deploy\Entity\Request;
 use RoundPartner\Deploy\RequestFactory;
 use RoundPartner\VerifyHash\VerifyHash;
+use \GuzzleHttp\Psr7\Response;
 
 class RequestProvider
 {
@@ -35,7 +36,8 @@ class RequestProvider
                 'X-GitHub-Event' => 'push',
             ),
             $body,
-            self::SECRET
+            self::SECRET,
+            [new Response(204, [], '')]
         ));
     }
 

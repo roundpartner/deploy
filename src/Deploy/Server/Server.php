@@ -5,6 +5,7 @@ namespace RoundPartner\Deploy\Server;
 use RoundPartner\Cloud\Message\Message;
 use RoundPartner\Cloud\Queue\PollFactory;
 use RoundPartner\Deploy\Container;
+use RoundPartner\Deploy\Plan\Entity\Plan;
 use RoundPartner\Deploy\Plan\PlanFactory;
 
 class Server
@@ -52,13 +53,14 @@ class Server
             return false;
         }
 
-        $cloudConfig = $this->container->getConfig()->get('cloud');
-        $queue = $this->container->getCloud()
-            ->queue($cloudConfig['name']);
-        $poll = PollFactory::create($queue, $this->sleep);
+        $messages = $this->container->getSeq()
+            ->get();
 
-        $message = $poll->next();
-        if ($message) {
+        if (null === $messages) {
+            return false;
+        }
+
+        foreach ($messages as $message) {
             $this->processMessage($message);
         }
 
@@ -71,11 +73,11 @@ class Server
      *
      * @throws \Exception
      */
-    protected function processMessage(Message $message)
+    protected function processMessage($message)
     {
-        $plan = $message->getBody();
+        $plan = Plan::factory($message->body);
         $this->runPlan($plan);
-        $message->delete();
+        $this->container->getSeq()->delete($message->id);
     }
 
     /**
