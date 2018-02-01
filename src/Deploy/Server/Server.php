@@ -56,12 +56,10 @@ class Server
         $messages = $this->container->getSeq()
             ->get();
 
-        if (null === $messages) {
-            return false;
-        }
-
-        foreach ($messages as $message) {
-            $this->processMessage($message);
+        if (null !== $messages) {
+            foreach ($messages as $message) {
+                $this->processMessage($message);
+            }
         }
 
         ++$this->currentIteration;
