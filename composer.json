@@ -46,7 +46,7 @@
     "symfony/config": "^3.0",
     "symfony/process": "^3.0",
     "monolog/monolog": "^1.18",
-    "roundpartner/seq-php": "^0.0.1"
+    "roundpartner/seq-php": "^1.0.0"
   },
   "require-dev": {
     "squizlabs/php_codesniffer": "^3.0",

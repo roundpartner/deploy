@@ -17,6 +17,7 @@ services:
     arguments: ['http://rumia:3411']
   seq:
     class: RoundPartner\Seq\Seq
+    arguments: ['chen', 'replace me']
   runner:
     class: RoundPartner\Deploy\Runner
     arguments: ['@logger']

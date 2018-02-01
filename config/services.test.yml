@@ -18,6 +18,7 @@ services:
     arguments: ['http://localhost:3411']
   seq:
     class: RoundPartner\Seq\Seq
+    arguments: ['chen', 'an example key']
   runner:
     class: RoundPartner\Test\Mocks\RunnerMock
     arguments: ['@logger']
