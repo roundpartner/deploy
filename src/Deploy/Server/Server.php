@@ -74,8 +74,10 @@ class Server
      */
     protected function processMessage($message)
     {
+        $this->container->getLogger()->addDebug('Processing message');
         $plan = Plan::factory($message->body);
         $this->runPlan($plan);
+        $this->container->getLogger()->addDebug('Deleting message');
         $this->container->getSeq()->delete($message->id);
     }
 
