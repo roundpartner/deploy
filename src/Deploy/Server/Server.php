@@ -53,6 +53,7 @@ class Server
             return false;
         }
 
+        $this->container->getLogger()->addDebug('Pulling Seq for messages');
         $messages = $this->container->getSeq()
             ->get();
 
