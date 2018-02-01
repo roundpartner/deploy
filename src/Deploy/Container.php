@@ -2,8 +2,6 @@
 
 namespace RoundPartner\Deploy;
 
-use RoundPartner\Cloud\Cloud;
-use RoundPartner\Cloud\CloudFactory;
 use RoundPartner\Conf\Service;
 use RoundPartner\Maker\Maker;
 use RoundPartner\Pigeon\PigeonInterface;
@@ -37,10 +35,6 @@ class Container
         $loader->load($config . '.yml');
         $this->container = $container;
 
-        $auth = Service::get('opencloud');
-        $cloud = CloudFactory::create($auth['username'], $auth['key'], $auth['secret']);
-        $this->container->set('opencloud', $cloud);
-
         $makerClass = $this->container->getDefinition('maker')->getClass();
         $makerConfig = Service::get('ifttt');
         $maker = new $makerClass($makerConfig['key']);
@@ -55,16 +49,6 @@ class Container
     public function getConfig()
     {
         return $this->container->get('config');
-    }
-
-    /**
-     * @return Cloud
-     *
-     * @throws \Exception
-     */
-    public function getCloud()
-    {
-        return $this->container->get('opencloud');
     }
 
     /**

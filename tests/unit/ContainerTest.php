@@ -20,11 +20,6 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('\RoundPartner\Deploy\Config', $this->container->getConfig());
     }
 
-    public function testGetCloud()
-    {
-        $this->assertInstanceOf('\RoundPartner\Cloud\Cloud', $this->container->getCloud());
-    }
-
     public function testGetLogger()
     {
         $this->container->getLogger();

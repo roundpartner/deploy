@@ -15,10 +15,6 @@
     },
     {
       "type": "git",
-      "url": "https://github.com/roundpartner/cloud"
-    },
-    {
-      "type": "git",
       "url": "https://github.com/roundpartner/verify-hash"
     },
     {
@@ -42,7 +38,6 @@
   },
   "require": {
     "roundpartner/configuration": "dev-master",
-    "roundpartner/cloud": "dev-master",
     "roundpartner/verify-hash": "dev-master",
     "roundpartner/ifttt-service": "dev-master",
     "roundpartner/pigeon-php": "dev-master",

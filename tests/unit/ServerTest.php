@@ -16,9 +16,6 @@ class ServerTest extends TestCase
     public function setUp()
     {
         $this->container = new \RoundPartner\Test\Mocks\Container();
-        $entity = new \RoundPartner\Deploy\Plan\Entity\Plan();
-        $entity->full_name = 'symfony/yaml';
-        $this->container->getCloud()->queue('deploy_dev')->addMessage($entity);
     }
 
     public function testCreateInstance()
